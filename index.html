@@ -1,17 +1,17 @@
+
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-<title>حاسبة الوصفات</title>
+<title>Prescription Calculator</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --green-deep:#0F6B45;
     --green:#16895A;
     --green-tint:#E5F5EC;
-    --green-tint-2:#F3FAF6;
     --bg:#F6F8F7;
     --card:#FFFFFF;
     --ink:#16201C;
@@ -26,15 +26,29 @@
   body{
     background:var(--bg);
     color:var(--ink);
-    font-family:'Cairo',sans-serif;
+    font-family:'Inter',sans-serif;
     -webkit-tap-highlight-color: transparent;
-    padding-bottom:48px;
+    padding-bottom:60px;
   }
   .wrap{max-width:480px;margin:0 auto;padding:18px 14px 0;}
 
-  header{padding:6px 4px 18px;}
+  header{padding:6px 4px 4px;}
   header h1{font-size:21px;font-weight:800;margin:0 0 2px;}
-  header p{font-size:13px;color:var(--ink-soft);margin:0;}
+  header p{font-size:12.5px;color:var(--ink-soft);margin:0;font-weight:600;}
+
+  .supply-bar{
+    position:sticky;top:0;z-index:5;
+    background:var(--green-deep);
+    color:#fff;
+    border-radius:14px;
+    padding:12px 16px;
+    margin:14px 0;
+    font-size:15px;
+    font-weight:800;
+    text-align:center;
+    box-shadow:var(--shadow);
+  }
+  .supply-bar span{font-size:18px;}
 
   .card{
     background:var(--card);
@@ -50,14 +64,10 @@
     padding:14px 16px;
     font-size:16px;
     font-weight:700;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
   }
-  .card-head.muted{background:var(--green-deep);opacity:.92;}
   .card-body{padding:16px;}
 
-  .field-label{font-size:12.5px;color:var(--ink-soft);font-weight:600;margin:0 0 8px;}
+  .field-label{font-size:12px;color:var(--ink-soft);font-weight:700;margin:0 0 8px;text-transform:uppercase;letter-spacing:.02em;}
 
   .btn-group{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
   .btn-group button{
@@ -70,13 +80,8 @@
     font-size:14px;
     font-weight:700;
     min-height:48px;
-    transition:background .12s, border-color .12s, color .12s;
   }
-  .btn-group button.active{
-    background:var(--green);
-    border-color:var(--green);
-    color:#fff;
-  }
+  .btn-group button.active{background:var(--green);border-color:var(--green);color:#fff;}
 
   .pill-group{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:16px;}
   .pill-group button{
@@ -90,11 +95,7 @@
     font-weight:700;
     min-height:40px;
   }
-  .pill-group button.active{
-    background:var(--green);
-    border-color:var(--green);
-    color:#fff;
-  }
+  .pill-group button.active{background:var(--green);border-color:var(--green);color:#fff;}
 
   .row{display:flex;gap:10px;margin-bottom:16px;}
   .row > div{flex:1;}
@@ -110,8 +111,16 @@
     color:var(--ink);
     background:#fff;
   }
-  input[type="number"]:focus, input[type="date"]:focus{
-    outline:none;border-color:var(--green);
+  input:focus{outline:none;border-color:var(--green);}
+
+  .readonly-field{
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    padding:11px 12px;
+    font-size:15px;
+    font-weight:600;
+    color:var(--ink-soft);
+    background:#F1F4F2;
   }
 
   .toggle-row{display:flex;gap:10px;margin-bottom:16px;}
@@ -129,11 +138,7 @@
     color:var(--ink-soft);
     background:#fff;
   }
-  .toggle.on{
-    background:var(--amber-tint);
-    border-color:var(--amber);
-    color:var(--amber);
-  }
+  .toggle.on{background:var(--amber-tint);border-color:var(--amber);color:var(--amber);}
   .toggle input{display:none;}
 
   .summary{
@@ -142,41 +147,79 @@
     border-radius:14px;
     padding:14px;
     text-align:center;
-    margin-bottom:12px;
   }
-  .summary .line1{font-size:15px;font-weight:700;color:var(--green-deep);margin-bottom:4px;}
-  .summary .line2{font-size:13px;color:var(--ink-soft);}
+  .summary .line1{font-size:15px;font-weight:700;color:var(--green-deep);margin-bottom:2px;}
+  .summary .line2{font-size:13px;color:var(--ink-soft);margin-bottom:10px;}
+  .summary hr{border:none;border-top:1px dashed #BEDCCB;margin:10px 0;}
+  .summary .line3{font-size:13.5px;color:var(--ink-soft);font-weight:600;margin-bottom:4px;}
+  .summary .line4{font-size:17px;color:var(--green-deep);font-weight:800;}
 
-  .save-btn{
-    width:100%;
+  .fab{
+    position:fixed;
+    bottom:20px;right:20px;
     background:var(--green-deep);
     color:#fff;
     border:none;
-    border-radius:12px;
-    padding:14px;
+    border-radius:999px;
+    padding:14px 20px;
     font-family:inherit;
-    font-size:15px;
+    font-size:14px;
     font-weight:800;
-    min-height:50px;
+    box-shadow:0 8px 20px rgba(15,107,69,.35);
+    z-index:20;
   }
-  .save-btn:active{opacity:.85;}
 
-  .note{
-    font-size:11.5px;
-    color:var(--ink-soft);
-    text-align:center;
-    padding:10px 18px 0;
-    line-height:1.7;
+  .modal-backdrop{
+    position:fixed;inset:0;
+    background:rgba(15,30,22,.45);
+    z-index:30;
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
   }
+  .modal-backdrop.open{display:flex;}
+  .modal-sheet{
+    background:#fff;
+    width:100%;
+    max-width:480px;
+    border-radius:20px 20px 0 0;
+    max-height:88vh;
+    overflow-y:auto;
+    animation:slideUp .22s ease-out;
+  }
+  @keyframes slideUp{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+  .modal-head{
+    position:sticky;top:0;
+    background:var(--green-deep);
+    color:#fff;
+    padding:14px 16px;
+    font-size:16px;
+    font-weight:700;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .modal-head button{
+    background:rgba(255,255,255,.18);
+    border:none;color:#fff;
+    width:30px;height:30px;border-radius:50%;
+    font-size:16px;font-weight:700;
+  }
+  .modal-body{padding:16px;}
+
+  footer{margin-top:30px;padding:0 4px;}
+  .disclaimer{
+    border-top:1px solid var(--line);
+    padding-top:16px;
+    font-size:11px;
+    line-height:1.7;
+    color:var(--ink-soft);
+  }
+  .disclaimer h3{font-size:11.5px;letter-spacing:.06em;color:var(--ink);margin:0 0 6px;}
 
   .toast{
-    position:fixed;
-    bottom:18px;left:50%;transform:translateX(-50%) translateY(20px);
-    background:var(--ink);color:#fff;
-    padding:11px 20px;border-radius:999px;
+    position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--ink);color:#fff;padding:11px 20px;border-radius:999px;
     font-size:13px;font-weight:700;
-    opacity:0;transition:opacity .2s, transform .2s;
-    pointer-events:none;
+    opacity:0;transition:opacity .2s, transform .2s;pointer-events:none;z-index:40;
   }
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
@@ -185,60 +228,16 @@
 
 <div class="wrap">
   <header>
-    <h1>حاسبة الوصفات</h1>
-    <p>اختر الجرعة والتكرار وعدد الأيام، والإجمالي بيتحسب تلقائيًا</p>
+    <h1>Prescription Calculator</h1>
+    <p>by Dr. Faisal Al-Anzy</p>
   </header>
 
-  <!-- LAST PRESCRIPTION -->
-  <div class="card" id="lastPanel">
-    <div class="card-head muted">آخر وصفة</div>
-    <div class="card-body">
-      <p class="field-label">عدد المرات</p>
-      <div class="btn-group" data-group="lastFreq">
-        <button data-value="OD" data-mult="1">OD</button>
-        <button data-value="BID" data-mult="2">BID</button>
-        <button data-value="TID" data-mult="3">TID</button>
-        <button data-value="QID" data-mult="4">QID</button>
-        <button data-value="Q4h" data-mult="6">Q4h</button>
-        <button data-value="Q2h" data-mult="12" class="active">Q2h</button>
-      </div>
+  <div class="supply-bar">Supply: <span id="supplyValueTop">0</span> units</div>
 
-      <div class="row">
-        <div>
-          <p class="field-label">الجرعة لكل مرة</p>
-          <input type="number" id="lastDose" step="0.5" min="0.5" value="1">
-        </div>
-        <div>
-          <p class="field-label">الكمية المتوفرة</p>
-          <input type="number" id="lastQty" step="1" min="1" value="95">
-        </div>
-      </div>
-
-      <div class="toggle-row">
-        <label class="toggle" id="lastPrnWrap">
-          <input type="checkbox" id="lastPRN">
-          <span>PRN عند الحاجة</span>
-        </label>
-      </div>
-
-      <p class="field-label">تاريخ البدء</p>
-      <div class="row" style="margin-bottom:0;">
-        <div><input type="date" id="lastDate"></div>
-      </div>
-
-      <div style="height:14px;"></div>
-      <div class="summary" id="lastSummary">
-        <div class="line1">—</div>
-        <div class="line2">—</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- NEW PRESCRIPTION -->
   <div class="card" id="newPanel">
-    <div class="card-head">وصفة جديدة</div>
+    <div class="card-head">New prescription</div>
     <div class="card-body">
-      <p class="field-label">عدد المرات</p>
+      <p class="field-label">Frequency</p>
       <div class="btn-group" data-group="newFreq">
         <button data-value="OD" data-mult="1">OD</button>
         <button data-value="BID" data-mult="2">BID</button>
@@ -250,27 +249,23 @@
 
       <div class="row">
         <div>
-          <p class="field-label">الجرعة لكل مرة</p>
+          <p class="field-label">Dose</p>
           <input type="number" id="newDose" step="0.5" min="0.5" value="2.5">
         </div>
         <div>
-          <p class="field-label">تاريخ البدء</p>
-          <input type="date" id="newDate">
+          <p class="field-label">Date</p>
+          <div class="readonly-field" id="newDate">—</div>
         </div>
       </div>
 
       <div class="toggle-row">
         <label class="toggle" id="newPrnWrap">
           <input type="checkbox" id="newPRN">
-          <span>PRN عند الحاجة</span>
-        </label>
-        <label class="toggle" id="newHalfWrap">
-          <input type="checkbox" id="newHalf">
-          <span>½ نصف قرص</span>
+          <span>PRN</span>
         </label>
       </div>
 
-      <p class="field-label">عدد الأيام</p>
+      <p class="field-label">Duration (days)</p>
       <div class="pill-group" data-group="newDays">
         <button data-value="1">1</button>
         <button data-value="7">7</button>
@@ -286,23 +281,79 @@
         <button data-value="90" class="active">90</button>
       </div>
 
-      <div class="summary" id="newSummary">
-        <div class="line1">—</div>
-        <div class="line2">—</div>
+      <div class="summary">
+        <div class="line1" id="newLine1">—</div>
+        <div class="line2" id="newLine2">—</div>
+        <hr>
+        <div class="line3" id="newSupplyLine">Supply is 0</div>
+        <div class="line4" id="newNeededLine">Quantity needed 0</div>
       </div>
-
-      <button class="save-btn" onclick="savePrescription()">حفظ الوصفة</button>
     </div>
   </div>
 
-  <p class="note">
-  </p>
+  <footer>
+    <div class="disclaimer">
+      <h3>DISCLAIMER</h3>
+      <p>The use of this tool does not waive, reduce, or substitute any professional, ethical, or legal responsibility of the dispensing pharmacist. The pharmacist maintains absolute and final accountability for verifying the accuracy of all inputs, drug frequencies, duration of therapy, and existing stock calculations. Any final quantity dispensed to a patient is performed under the sole professional responsibility and license of the practicing pharmacist.</p>
+    </div>
+  </footer>
+</div>
+
+<button class="fab" id="openLastBtn">Last Rx</button>
+
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal-sheet">
+    <div class="modal-head">
+      <span>Last prescription</span>
+      <button id="closeModal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p class="field-label">Frequency</p>
+      <div class="btn-group" data-group="lastFreq">
+        <button data-value="OD" data-mult="1">OD</button>
+        <button data-value="BID" data-mult="2">BID</button>
+        <button data-value="TID" data-mult="3">TID</button>
+        <button data-value="QID" data-mult="4">QID</button>
+        <button data-value="Q4h" data-mult="6">Q4h</button>
+        <button data-value="Q2h" data-mult="12" class="active">Q2h</button>
+      </div>
+
+      <div class="row">
+        <div>
+          <p class="field-label">Dose</p>
+          <input type="number" id="lastDose" step="0.5" min="0.5" value="1">
+        </div>
+        <div>
+          <p class="field-label">Last quantity</p>
+          <input type="number" id="lastQty" step="1" min="0" value="95">
+        </div>
+      </div>
+
+      <div class="toggle-row">
+        <label class="toggle" id="lastPrnWrap">
+          <input type="checkbox" id="lastPRN">
+          <span>PRN</span>
+        </label>
+      </div>
+
+      <p class="field-label">Date</p>
+      <div class="row" style="margin-bottom:16px;">
+        <div><input type="date" id="lastDate"></div>
+      </div>
+
+      <div class="summary">
+        <div class="line1" id="lastLine1">—</div>
+        <div class="line2" id="lastLine2">—</div>
+        <hr>
+        <div class="line4" id="lastSupplyLine">Supply is 0</div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-  // ---- generic radio-style button groups ----
   document.querySelectorAll('.btn-group, .pill-group').forEach(group => {
     group.addEventListener('click', e => {
       const btn = e.target.closest('button');
@@ -313,7 +364,6 @@
     });
   });
 
-  // ---- toggle pills (PRN / half) ----
   document.querySelectorAll('.toggle').forEach(t => {
     const input = t.querySelector('input');
     t.addEventListener('click', () => {
@@ -329,42 +379,81 @@
     return attr ? el.dataset[attr] : el.dataset.value;
   }
 
-  function fmtDate(input){
-    if(!input.value) return '—';
-    const d = new Date(input.value);
-    return d.toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'});
+  function todaySA(){
+    // Returns YYYY-MM-DD for "today" in Saudi Arabia time, regardless of device timezone
+    const fmt = new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Riyadh', year:'numeric', month:'2-digit', day:'2-digit'});
+    return fmt.format(new Date());
   }
+
+  function fmtDate(input){
+    if(!input.value) return '\u2014';
+    const d = new Date(input.value + 'T00:00:00');
+    return d.toLocaleDateString('en-GB', {day:'2-digit', month:'short'});
+  }
+
+  function daysSince(input){
+    if(!input.value) return 0;
+    const start = new Date(input.value + 'T00:00:00');
+    const today = new Date(todaySA() + 'T00:00:00');
+    const diff = Math.floor((today - start) / (1000*60*60*24));
+    return Math.max(0, diff);
+  }
+
+  function formatDose(n){
+    const whole = Math.floor(n);
+    const frac = n - whole;
+    if(Math.abs(frac - 0.5) < 0.001){
+      return whole === 0 ? '\u00BD' : `${whole}\u00BD`;
+    }
+    const r = Math.round(n*100)/100;
+    return r.toString();
+  }
+
+  function formatNum(n){
+    const r = Math.round(n*10)/10;
+    return Number.isInteger(r) ? r.toString() : r.toFixed(1);
+  }
+
+  let currentSupply = 0;
 
   function updateLast(){
     const mult = parseFloat(getActive('lastFreq','mult')) || 0;
-    const freq = getActive('lastFreq');
     const dose = parseFloat(document.getElementById('lastDose').value) || 0;
     const qty  = parseFloat(document.getElementById('lastQty').value) || 0;
-    const dateTxt = fmtDate(document.getElementById('lastDate'));
+    const prn  = document.getElementById('lastPRN').checked;
+    const dateInput = document.getElementById('lastDate');
+    const dateTxt = fmtDate(dateInput);
+    const days = daysSince(dateInput);
 
-    const dailyUnits = dose * mult;
-    const daysCovered = dailyUnits > 0 ? Math.ceil(qty / dailyUnits) : 0;
+    let daily = dose * mult;
+    if(prn) daily = daily * (2/3);
 
-    const summary = document.getElementById('lastSummary');
-    summary.querySelector('.line1').textContent = `إجمالي الكمية ${qty} وحدة`;
-    summary.querySelector('.line2').textContent =
-      `${dose} وحدة × ${mult} يوميًا (${freq}) من ${dateTxt} — يكفي ${daysCovered} يوم تقريبًا`;
+    const consumed = days * daily;
+    const supply = Math.max(0, qty - consumed);
+    currentSupply = supply;
+
+    document.getElementById('lastLine1').textContent = `Total of ${formatNum(qty)} Unit`;
+    document.getElementById('lastLine2').textContent = `${formatDose(dose)} Unit ${formatNum(mult)} daily from ${dateTxt} (${days} days)`;
+    document.getElementById('lastSupplyLine').textContent = `Supply is ${formatNum(supply)}`;
+    document.getElementById('supplyValueTop').textContent = formatNum(supply);
   }
 
   function updateNew(){
     const mult = parseFloat(getActive('newFreq','mult')) || 0;
-    const freq = getActive('newFreq');
-    let dose = parseFloat(document.getElementById('newDose').value) || 0;
-    const half = document.getElementById('newHalf').checked;
-    if(half) dose = dose / 2;
+    const dose = parseFloat(document.getElementById('newDose').value) || 0;
+    const prn  = document.getElementById('newPRN').checked;
     const days = parseFloat(getActive('newDays')) || 0;
 
-    const dailyUnits = dose * mult;
-    const total = dailyUnits * days;
+    let daily = dose * mult;
+    if(prn) daily = daily * (2/3);
 
-    const summary = document.getElementById('newSummary');
-    summary.querySelector('.line1').textContent = `${dose} وحدة × ${mult} يوميًا (${freq}) لمدة ${days} يوم`;
-    summary.querySelector('.line2').textContent = `الكمية المطلوبة: ${total} وحدة`;
+    const total = daily * days;
+    const needed = Math.max(0, total - currentSupply);
+
+    document.getElementById('newLine1').textContent = `${formatDose(dose)} Unit ${formatNum(mult)} daily For ${days} Days`;
+    document.getElementById('newLine2').textContent = `The Total is ${formatNum(total)}`;
+    document.getElementById('newSupplyLine').textContent = `Supply is ${formatNum(currentSupply)}`;
+    document.getElementById('newNeededLine').textContent = `Quantity needed ${formatNum(needed)}`;
   }
 
   function runUpdates(){
@@ -372,44 +461,25 @@
     updateNew();
   }
 
-  // toggle visual sync on load
   document.querySelectorAll('.toggle').forEach(t=>{
     const input = t.querySelector('input');
     t.classList.toggle('on', input.checked);
   });
 
-  // default dates = today
-  const today = new Date().toISOString().slice(0,10);
-  document.getElementById('lastDate').value = today;
-  document.getElementById('newDate').value = today;
+  document.getElementById('lastDate').value = todaySA();
+  document.getElementById('newDate').textContent = fmtDate({value: todaySA()});
+
   document.getElementById('lastDate').addEventListener('change', runUpdates);
-  document.getElementById('newDate').addEventListener('change', runUpdates);
   document.getElementById('lastDose').addEventListener('input', runUpdates);
   document.getElementById('lastQty').addEventListener('input', runUpdates);
   document.getElementById('newDose').addEventListener('input', runUpdates);
 
   runUpdates();
 
-  // ---- save (Firebase hook goes here later) ----
-  function savePrescription(){
-    const data = {
-      freq: getActive('newFreq'),
-      dose: document.getElementById('newDose').value,
-      half: document.getElementById('newHalf').checked,
-      prn: document.getElementById('newPRN').checked,
-      days: getActive('newDays'),
-      date: document.getElementById('newDate').value,
-      total: document.getElementById('newSummary').querySelector('.line2').textContent
-    };
-    console.log('prescription ready to save:', data);
-    // TODO: استبدل السطر ده بكود Firestore لما الـ project يبقى جاهز
-    // await db.collection('prescriptions').add({...data, createdAt: new Date()});
-
-    const toast = document.getElementById('toast');
-    toast.textContent = 'جاهز للحفظ (Firebase لسه مش متوصل)';
-    toast.classList.add('show');
-    setTimeout(()=> toast.classList.remove('show'), 2200);
-  }
+  const backdrop = document.getElementById('modalBackdrop');
+  document.getElementById('openLastBtn').addEventListener('click', () => backdrop.classList.add('open'));
+  document.getElementById('closeModal').addEventListener('click', () => backdrop.classList.remove('open'));
+  backdrop.addEventListener('click', (e) => { if(e.target === backdrop) backdrop.classList.remove('open'); });
 </script>
 
 </body>
