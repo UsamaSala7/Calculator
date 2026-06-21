@@ -433,7 +433,8 @@
     currentSupply = supply;
 
     document.getElementById('lastLine1').textContent = `Total of ${formatNum(qty)} Unit`;
-    document.getElementById('lastLine2').textContent = `${formatDose(dose)} Unit ${formatNum(mult)} daily from ${dateTxt} (${days} days)`;
+    const lastPrnText = prn ? ' PRN' : '';
+    document.getElementById('lastLine2').textContent = `${formatDose(dose)} Unit ${formatNum(mult)} daily${lastPrnText} from ${dateTxt} (${days} days)`;
     document.getElementById('lastSupplyLine').textContent = `Supply is ${formatNum(supply)}`;
     document.getElementById('supplyValueTop').textContent = formatNum(supply);
   }
@@ -450,7 +451,8 @@
     const total = daily * days;
     const needed = Math.max(0, total - currentSupply);
 
-    document.getElementById('newLine1').textContent = `${formatDose(dose)} Unit ${formatNum(mult)} daily For ${days} Days`;
+    const newPrnText = prn ? ' PRN' : '';
+    document.getElementById('newLine1').textContent = `${formatDose(dose)} Unit ${formatNum(mult)} daily${newPrnText} For ${days} Days`;
     document.getElementById('newLine2').textContent = `The Total is ${formatNum(total)}`;
     document.getElementById('newSupplyLine').textContent = `Supply is ${formatNum(currentSupply)}`;
     document.getElementById('newNeededLine').textContent = `Quantity needed ${formatNum(needed)}`;
