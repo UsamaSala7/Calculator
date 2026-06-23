@@ -553,7 +553,20 @@
 
   // ── MODAL ─────────────────────────────────────────────
   const backdrop = document.getElementById('modalBackdrop');
-  document.getElementById('openLastBtn').addEventListener('click', () => backdrop.classList.add('open'));
+  document.getElementById('openLastBtn').addEventListener('click', () => {
+  backdrop.classList.add('open');
+  setTimeout(() => {
+    ['trackLastDose', 'trackLastQty'].forEach(trackId => {
+      const track = document.getElementById(trackId);
+      const values = trackId === 'trackLastQty' ? QTY_VALUES : DOSE_VALUES;
+      const idx = values.indexOf(rollerState[trackId]);
+      if(idx >= 0){
+        track.scrollTop = idx * ITEM_H;
+        highlightCenter(track, values);
+      }
+    });
+  }, 50);
+});
   document.getElementById('closeModal').addEventListener('click',  () => backdrop.classList.remove('open'));
   backdrop.addEventListener('click', e => { if(e.target === backdrop) backdrop.classList.remove('open'); });
 </script>
