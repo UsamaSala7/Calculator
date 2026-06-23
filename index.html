@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -20,6 +19,7 @@
     --amber:#B7791F;
     --amber-tint:#FBF1DF;
     --shadow: 0 1px 2px rgba(15,30,22,.04), 0 6px 16px rgba(15,30,22,.06);
+    --item-h: 48px;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
@@ -27,7 +27,7 @@
     background:var(--bg);
     color:var(--ink);
     font-family:'Inter',sans-serif;
-    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color:transparent;
     padding-bottom:60px;
   }
   .wrap{max-width:480px;margin:0 auto;padding:18px 14px 0;}
@@ -38,115 +38,114 @@
 
   .supply-bar{
     position:sticky;top:0;z-index:5;
-    background:var(--green-deep);
-    color:#fff;
-    border-radius:14px;
-    padding:12px 16px;
-    margin:14px 0;
-    font-size:15px;
-    font-weight:800;
-    text-align:center;
-    box-shadow:var(--shadow);
+    background:var(--green-deep);color:#fff;
+    border-radius:14px;padding:12px 16px;
+    margin:14px 0;font-size:15px;font-weight:800;
+    text-align:center;box-shadow:var(--shadow);
   }
   .supply-bar span{font-size:18px;}
 
   .card{
-    background:var(--card);
-    border-radius:18px;
-    box-shadow:var(--shadow);
-    border:1px solid var(--line);
-    margin-bottom:18px;
-    overflow:hidden;
+    background:var(--card);border-radius:18px;
+    box-shadow:var(--shadow);border:1px solid var(--line);
+    margin-bottom:18px;overflow:hidden;
   }
-  .card-head{
-    background:var(--green);
-    color:#fff;
-    padding:14px 16px;
-    font-size:16px;
-    font-weight:700;
-  }
+  .card-head{background:var(--green);color:#fff;padding:14px 16px;font-size:16px;font-weight:700;}
   .card-body{padding:16px;}
 
   .field-label{font-size:12px;color:var(--ink-soft);font-weight:700;margin:0 0 8px;text-transform:uppercase;letter-spacing:.02em;}
 
   .btn-group{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
   .btn-group button{
-    border:1.5px solid var(--line);
-    background:#fff;
-    color:var(--ink);
-    border-radius:12px;
-    padding:12px 4px;
-    font-family:inherit;
-    font-size:14px;
-    font-weight:700;
-    min-height:48px;
+    border:1.5px solid var(--line);background:#fff;color:var(--ink);
+    border-radius:12px;padding:12px 4px;font-family:inherit;
+    font-size:14px;font-weight:700;min-height:48px;
   }
   .btn-group button.active{background:var(--green);border-color:var(--green);color:#fff;}
 
   .pill-group{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:16px;}
   .pill-group button{
-    aspect-ratio:1/1;
-    border:1.5px solid var(--line);
-    background:#fff;
-    color:var(--ink);
-    border-radius:999px;
-    font-family:inherit;
-    font-size:12.5px;
-    font-weight:700;
-    min-height:40px;
+    aspect-ratio:1/1;border:1.5px solid var(--line);background:#fff;color:var(--ink);
+    border-radius:999px;font-family:inherit;font-size:12.5px;font-weight:700;min-height:40px;
   }
   .pill-group button.active{background:var(--green);border-color:var(--green);color:#fff;}
 
   .row{display:flex;gap:10px;margin-bottom:16px;}
   .row > div{flex:1;}
 
-  input[type="number"], input[type="date"]{
-    width:100%;
-    border:1.5px solid var(--line);
-    border-radius:12px;
-    padding:11px 12px;
-    font-family:inherit;
-    font-size:15px;
-    font-weight:600;
-    color:var(--ink);
-    background:#fff;
+  input[type="date"]{
+    width:100%;border:1.5px solid var(--line);border-radius:12px;
+    padding:11px 12px;font-family:inherit;font-size:15px;font-weight:600;
+    color:var(--ink);background:#fff;
   }
   input:focus{outline:none;border-color:var(--green);}
 
   .readonly-field{
-    border:1.5px solid var(--line);
-    border-radius:12px;
-    padding:11px 12px;
-    font-size:15px;
-    font-weight:600;
-    color:var(--ink-soft);
-    background:#F1F4F2;
+    border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;
+    font-size:15px;font-weight:600;color:var(--ink-soft);background:#F1F4F2;
   }
+
+  /* ── ROLLER ── */
+  .roller-wrap{
+    border:1.5px solid var(--line);border-radius:12px;
+    background:#fff;overflow:hidden;position:relative;
+    height:calc(var(--item-h)*3);
+  }
+  .roller-track{
+    overflow-y:scroll;height:100%;
+    scroll-snap-type:y mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .roller-track::-webkit-scrollbar{display:none;}
+  .roller-spacer{
+    height:var(--item-h);flex-shrink:0;
+    scroll-snap-align:none;
+  }
+  .roller-item{
+    height:var(--item-h);
+    display:flex;align-items:center;justify-content:center;
+    font-size:17px;font-weight:700;
+    scroll-snap-align:center;
+    color:var(--ink-soft);
+    transition:color .15s, font-size .15s;
+    cursor:pointer;
+    user-select:none;
+  }
+  .roller-item.selected{color:var(--green-deep);font-size:20px;}
+  /* gradient overlay */
+  .roller-fade{
+    position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(
+      to bottom,
+      rgba(255,255,255,.92) 0%,
+      rgba(255,255,255,.3) 30%,
+      rgba(255,255,255,0) 50%,
+      rgba(255,255,255,.3) 70%,
+      rgba(255,255,255,.92) 100%
+    );
+  }
+  /* center selection line */
+  .roller-line-top, .roller-line-bottom{
+    position:absolute;left:12px;right:12px;height:1.5px;
+    background:var(--green);pointer-events:none;
+  }
+  .roller-line-top{top:calc(var(--item-h) - 0.75px);}
+  .roller-line-bottom{top:calc(var(--item-h)*2 - 0.75px);}
 
   .toggle-row{display:flex;gap:10px;margin-bottom:16px;}
   .toggle{
-    flex:1;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    border:1.5px solid var(--line);
-    border-radius:12px;
-    padding:11px 8px;
-    font-size:13.5px;
-    font-weight:700;
-    color:var(--ink-soft);
-    background:#fff;
+    flex:1;display:flex;align-items:center;justify-content:center;
+    gap:8px;border:1.5px solid var(--line);border-radius:12px;
+    padding:11px 8px;font-size:13.5px;font-weight:700;
+    color:var(--ink-soft);background:#fff;
   }
   .toggle.on{background:var(--amber-tint);border-color:var(--amber);color:var(--amber);}
   .toggle input{display:none;}
 
   .summary{
-    background:var(--green-tint);
-    border:1px solid var(--green);
-    border-radius:14px;
-    padding:14px;
-    text-align:center;
+    background:var(--green-tint);border:1px solid var(--green);
+    border-radius:14px;padding:14px;text-align:center;
   }
   .summary .line1{font-size:15px;font-weight:700;color:var(--green-deep);margin-bottom:2px;}
   .summary .line2{font-size:13px;color:var(--ink-soft);margin-bottom:10px;}
@@ -155,71 +154,55 @@
   .summary .line4{font-size:17px;color:var(--green-deep);font-weight:800;}
 
   .fab{
-    position:fixed;
-    bottom:20px;right:20px;
-    background:var(--green-deep);
-    color:#fff;
-    border:none;
-    border-radius:999px;
-    padding:14px 20px;
-    font-family:inherit;
-    font-size:14px;
-    font-weight:800;
-    box-shadow:0 8px 20px rgba(15,107,69,.35);
-    z-index:20;
+    position:fixed;bottom:20px;right:20px;
+    background:#1E4976;color:#fff;border:none;
+    border-radius:999px;padding:14px 20px;font-family:inherit;
+    font-size:14px;font-weight:800;
+    box-shadow:0 8px 20px rgba(30,73,118,.35);z-index:20;
   }
 
   .modal-backdrop{
-    position:fixed;inset:0;
-    background:rgba(15,30,22,.45);
-    z-index:30;
-    display:none;
-    align-items:flex-end;
-    justify-content:center;
+    position:fixed;inset:0;background:rgba(15,30,22,.45);
+    z-index:30;display:none;align-items:flex-end;justify-content:center;
   }
   .modal-backdrop.open{display:flex;}
   .modal-sheet{
-    background:#fff;
-    width:100%;
-    max-width:480px;
-    border-radius:20px 20px 0 0;
-    max-height:88vh;
-    overflow-y:auto;
+    background:#fff;width:100%;max-width:480px;
+    border-radius:20px 20px 0 0;max-height:88vh;overflow-y:auto;
     animation:slideUp .22s ease-out;
   }
   @keyframes slideUp{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
   .modal-head{
-    position:sticky;top:0;
-    background:var(--green-deep);
-    color:#fff;
-    padding:14px 16px;
-    font-size:16px;
-    font-weight:700;
+    position:sticky;top:0;background:#1E4976;color:#fff;
+    padding:14px 16px;font-size:16px;font-weight:700;
     display:flex;align-items:center;justify-content:space-between;
   }
   .modal-head button{
-    background:rgba(255,255,255,.18);
-    border:none;color:#fff;
-    width:30px;height:30px;border-radius:50%;
-    font-size:16px;font-weight:700;
+    background:rgba(255,255,255,.18);border:none;color:#fff;
+    width:30px;height:30px;border-radius:50%;font-size:16px;font-weight:700;
   }
   .modal-body{padding:16px;}
 
+  /* ── Last Rx modal blue overrides ── */
+  .modal-sheet .summary{background:#E8F0F8;border-color:#1E4976;}
+  .modal-sheet .summary .line1{color:#1E4976;}
+  .modal-sheet .summary .line4{color:#1E4976;}
+  .modal-sheet .btn-group button.active{background:#1E4976;border-color:#1E4976;}
+  .modal-sheet .roller-line-top,
+  .modal-sheet .roller-line-bottom{background:#1E4976;}
+  .modal-sheet .roller-item.selected{color:#1E4976;}
+  .modal-sheet input[type="date"]:focus{border-color:#1E4976;}
+  .modal-sheet .toggle.on{background:#E3EBF4;border-color:#1E4976;color:#1E4976;}
+
   footer{margin-top:30px;padding:0 4px;}
-  .disclaimer{
-    border-top:1px solid var(--line);
-    padding-top:16px;
-    font-size:11px;
-    line-height:1.7;
-    color:var(--ink-soft);
-  }
+  .disclaimer{border-top:1px solid var(--line);padding-top:16px;font-size:11px;line-height:1.7;color:var(--ink-soft);}
   .disclaimer h3{font-size:11.5px;letter-spacing:.06em;color:var(--ink);margin:0 0 6px;}
 
   .toast{
     position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(20px);
     background:var(--ink);color:#fff;padding:11px 20px;border-radius:999px;
     font-size:13px;font-weight:700;
-    opacity:0;transition:opacity .2s, transform .2s;pointer-events:none;z-index:40;
+    opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;z-index:40;
   }
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
@@ -234,12 +217,13 @@
 
   <div class="supply-bar">Supply: <span id="supplyValueTop">0</span> units</div>
 
-  <div class="card" id="newPanel">
+  <!-- NEW PRESCRIPTION -->
+  <div class="card">
     <div class="card-head">New prescription</div>
     <div class="card-body">
       <p class="field-label">Frequency</p>
       <div class="btn-group" data-group="newFreq">
-        <button data-value="OD" data-mult="1">OD</button>
+        <button data-value="OD"  data-mult="1">OD</button>
         <button data-value="BID" data-mult="2">BID</button>
         <button data-value="TID" data-mult="3">TID</button>
         <button data-value="QID" data-mult="4">QID</button>
@@ -250,7 +234,12 @@
       <div class="row">
         <div>
           <p class="field-label">Dose</p>
-          <input type="number" id="newDose" step="0.5" min="0.5" value="2.5">
+          <div class="roller-wrap" id="rollerNewDose">
+            <div class="roller-track" id="trackNewDose"></div>
+            <div class="roller-fade"></div>
+            <div class="roller-line-top"></div>
+            <div class="roller-line-bottom"></div>
+          </div>
         </div>
         <div>
           <p class="field-label">Date</p>
@@ -301,6 +290,7 @@
 
 <button class="fab" id="openLastBtn">Last Rx</button>
 
+<!-- LAST PRESCRIPTION MODAL -->
 <div class="modal-backdrop" id="modalBackdrop">
   <div class="modal-sheet">
     <div class="modal-head">
@@ -308,9 +298,21 @@
       <button id="closeModal">&times;</button>
     </div>
     <div class="modal-body">
+      <p class="field-label">Last quantity</p>
+      <div class="row" style="margin-bottom:16px;">
+        <div>
+          <div class="roller-wrap" id="rollerLastQty">
+            <div class="roller-track" id="trackLastQty"></div>
+            <div class="roller-fade"></div>
+            <div class="roller-line-top"></div>
+            <div class="roller-line-bottom"></div>
+          </div>
+        </div>
+      </div>
+
       <p class="field-label">Frequency</p>
       <div class="btn-group" data-group="lastFreq">
-        <button data-value="OD" data-mult="1">OD</button>
+        <button data-value="OD"  data-mult="1">OD</button>
         <button data-value="BID" data-mult="2">BID</button>
         <button data-value="TID" data-mult="3">TID</button>
         <button data-value="QID" data-mult="4">QID</button>
@@ -321,11 +323,12 @@
       <div class="row">
         <div>
           <p class="field-label">Dose</p>
-          <input type="number" id="lastDose" step="0.5" min="0.5" value="1">
-        </div>
-        <div>
-          <p class="field-label">Last quantity</p>
-          <input type="number" id="lastQty" step="1" min="0" value="95">
+          <div class="roller-wrap" id="rollerLastDose">
+            <div class="roller-track" id="trackLastDose"></div>
+            <div class="roller-fade"></div>
+            <div class="roller-line-top"></div>
+            <div class="roller-line-bottom"></div>
+          </div>
         </div>
       </div>
 
@@ -354,6 +357,77 @@
 <div class="toast" id="toast"></div>
 
 <script>
+  // ── ROLLER ENGINE ──────────────────────────────────────
+  const ITEM_H = 48;
+  const rollerState = {};
+
+  function buildRoller(trackId, values, defaultValue) {
+    const track = document.getElementById(trackId);
+    const key   = trackId; // use trackId as state key
+
+    // spacer before and after so first/last items can center
+    const spacerTop = document.createElement('div');
+    spacerTop.className = 'roller-spacer';
+    track.appendChild(spacerTop);
+
+    values.forEach((v, i) => {
+      const el = document.createElement('div');
+      el.className = 'roller-item';
+      el.textContent = formatDose(v);
+      el.dataset.value = v;
+      track.appendChild(el);
+    });
+
+    const spacerBot = document.createElement('div');
+    spacerBot.className = 'roller-spacer';
+    track.appendChild(spacerBot);
+
+    // set initial scroll
+    const defaultIdx = values.indexOf(defaultValue);
+    const idx = defaultIdx >= 0 ? defaultIdx : 0;
+    rollerState[key] = values[idx];
+
+    // scroll without animation on init
+    requestAnimationFrame(() => {
+      track.scrollTop = idx * ITEM_H;
+      highlightCenter(track, values);
+    });
+
+    // listen for scroll end
+    let scrollTimer;
+    track.addEventListener('scroll', () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        const snappedIdx = Math.round(track.scrollTop / ITEM_H);
+        const clampedIdx = Math.max(0, Math.min(values.length - 1, snappedIdx));
+        rollerState[key] = values[clampedIdx];
+        highlightCenter(track, values);
+        runUpdates();
+      }, 80);
+    });
+  }
+
+  function highlightCenter(track, values) {
+    const idx = Math.round(track.scrollTop / ITEM_H);
+    const items = track.querySelectorAll('.roller-item');
+    items.forEach((el, i) => {
+      el.classList.toggle('selected', i === idx);
+    });
+  }
+
+  function getRollerValue(trackId) {
+    return rollerState[trackId] || 0;
+  }
+
+  // dose values: 0.5 steps up to 3, then integer steps to 5000
+  const DOSE_VALUES = [];
+  for(let v = 0.5; v <= 3; v = Math.round((v + 0.5)*10)/10) DOSE_VALUES.push(v);
+  for(let v = 4; v <= 5000; v++) DOSE_VALUES.push(v);
+
+  // qty values 0–500
+  const QTY_VALUES = Array.from({length:501}, (_,i) => i);
+
+  // ── BUTTON GROUPS ──────────────────────────────────────
   document.querySelectorAll('.btn-group, .pill-group').forEach(group => {
     group.addEventListener('click', e => {
       const btn = e.target.closest('button');
@@ -364,6 +438,7 @@
     });
   });
 
+  // ── TOGGLES ───────────────────────────────────────────
   document.querySelectorAll('.toggle').forEach(t => {
     const input = t.querySelector('input');
     t.addEventListener('click', () => {
@@ -373,40 +448,42 @@
     });
   });
 
+  // ── HELPERS ───────────────────────────────────────────
   function getActive(groupSelector, attr){
-    const el = document.querySelector(`.btn-group[data-group="${groupSelector}"] button.active, .pill-group[data-group="${groupSelector}"] button.active`);
+    const el = document.querySelector(
+      `.btn-group[data-group="${groupSelector}"] button.active,` +
+      `.pill-group[data-group="${groupSelector}"] button.active`
+    );
     if(!el) return null;
     return attr ? el.dataset[attr] : el.dataset.value;
   }
 
   function todaySA(){
-    // Returns YYYY-MM-DD for "today" in Saudi Arabia time, regardless of device timezone
-    const fmt = new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Riyadh', year:'numeric', month:'2-digit', day:'2-digit'});
+    const fmt = new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Riyadh',year:'numeric',month:'2-digit',day:'2-digit'});
     return fmt.format(new Date());
   }
 
   function fmtDate(input){
     if(!input.value) return '\u2014';
     const d = new Date(input.value + 'T00:00:00');
-    return d.toLocaleDateString('en-GB', {day:'2-digit', month:'short'});
+    return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
   }
 
   function daysSince(input){
     if(!input.value) return 0;
     const start = new Date(input.value + 'T00:00:00');
-    const today = new Date(todaySA() + 'T00:00:00');
-    const diff = Math.floor((today - start) / (1000*60*60*24));
+    const today = new Date(todaySA()  + 'T00:00:00');
+    const diff  = Math.floor((today - start)/(1000*60*60*24));
     return Math.max(0, diff);
   }
 
   function formatDose(n){
     const whole = Math.floor(n);
-    const frac = n - whole;
+    const frac  = n - whole;
     if(Math.abs(frac - 0.5) < 0.001){
       return whole === 0 ? '\u00BD' : `${whole}\u00BD`;
     }
-    const r = Math.round(n*100)/100;
-    return r.toString();
+    return (Math.round(n*100)/100).toString();
   }
 
   function formatNum(n){
@@ -414,74 +491,74 @@
     return Number.isInteger(r) ? r.toString() : r.toFixed(1);
   }
 
+  // ── CALCULATIONS ──────────────────────────────────────
   let currentSupply = 0;
 
   function updateLast(){
     const mult = parseFloat(getActive('lastFreq','mult')) || 0;
-    const dose = parseFloat(document.getElementById('lastDose').value) || 0;
-    const qty  = parseFloat(document.getElementById('lastQty').value) || 0;
+    const dose = getRollerValue('trackLastDose');
+    const qty  = getRollerValue('trackLastQty');
     const prn  = document.getElementById('lastPRN').checked;
     const dateInput = document.getElementById('lastDate');
-    const dateTxt = fmtDate(dateInput);
-    const days = daysSince(dateInput);
+    const dateTxt   = fmtDate(dateInput);
+    const days      = daysSince(dateInput);
 
     let daily = dose * mult;
     if(prn) daily = daily * (2/3);
 
-    const consumed = days * daily;
-    const supply = Math.max(0, qty - consumed);
+    const supply = Math.max(0, qty - days * daily);
     currentSupply = supply;
 
+    const prnTxt = prn ? ' PRN' : '';
     document.getElementById('lastLine1').textContent = `Total of ${formatNum(qty)} Unit`;
-    const lastPrnText = prn ? ' PRN' : '';
-    document.getElementById('lastLine2').textContent = `${formatDose(dose)} Unit ${formatNum(mult)} daily${lastPrnText} from ${dateTxt} (${days} days)`;
+    document.getElementById('lastLine2').textContent =
+      `${formatDose(dose)} Unit ${formatNum(mult)} daily${prnTxt} from ${dateTxt} (${days} days)`;
     document.getElementById('lastSupplyLine').textContent = `Supply is ${formatNum(supply)}`;
-    document.getElementById('supplyValueTop').textContent = formatNum(supply);
+    document.getElementById('supplyValueTop').textContent  = formatNum(supply);
   }
 
   function updateNew(){
     const mult = parseFloat(getActive('newFreq','mult')) || 0;
-    const dose = parseFloat(document.getElementById('newDose').value) || 0;
+    const dose = getRollerValue('trackNewDose');
     const prn  = document.getElementById('newPRN').checked;
     const days = parseFloat(getActive('newDays')) || 0;
 
     let daily = dose * mult;
     if(prn) daily = daily * (2/3);
 
-    const total = daily * days;
+    const total  = daily * days;
     const needed = Math.max(0, total - currentSupply);
 
-    const newPrnText = prn ? ' PRN' : '';
-    document.getElementById('newLine1').textContent = `${formatDose(dose)} Unit ${formatNum(mult)} daily${newPrnText} For ${days} Days`;
+    const prnTxt = prn ? ' PRN' : '';
+    document.getElementById('newLine1').textContent = `${formatDose(dose)} Unit ${formatNum(mult)} daily${prnTxt} For ${days} Days`;
     document.getElementById('newLine2').textContent = `The Total is ${formatNum(total)}`;
-    document.getElementById('newSupplyLine').textContent = `Supply is ${formatNum(currentSupply)}`;
-    document.getElementById('newNeededLine').textContent = `Quantity needed ${formatNum(needed)}`;
+    document.getElementById('newSupplyLine').textContent  = `Supply is ${formatNum(currentSupply)}`;
+    document.getElementById('newNeededLine').textContent  = `Quantity needed ${formatNum(needed)}`;
   }
 
-  function runUpdates(){
-    updateLast();
-    updateNew();
-  }
+  function runUpdates(){ updateLast(); updateNew(); }
 
-  document.querySelectorAll('.toggle').forEach(t=>{
-    const input = t.querySelector('input');
-    t.classList.toggle('on', input.checked);
-  });
+  // ── INIT ──────────────────────────────────────────────
+  buildRoller('trackNewDose',  DOSE_VALUES, 2.5);
+  buildRoller('trackLastDose', DOSE_VALUES, 1);
+  buildRoller('trackLastQty',  QTY_VALUES,  0);
 
   document.getElementById('lastDate').value = todaySA();
   document.getElementById('newDate').textContent = fmtDate({value: todaySA()});
 
   document.getElementById('lastDate').addEventListener('change', runUpdates);
-  document.getElementById('lastDose').addEventListener('input', runUpdates);
-  document.getElementById('lastQty').addEventListener('input', runUpdates);
-  document.getElementById('newDose').addEventListener('input', runUpdates);
+
+  document.querySelectorAll('.toggle').forEach(t => {
+    t.classList.toggle('on', t.querySelector('input').checked);
+  });
 
   runUpdates();
 
+  // ── MODAL ─────────────────────────────────────────────
   const backdrop = document.getElementById('modalBackdrop');
   document.getElementById('openLastBtn').addEventListener('click', () => backdrop.classList.add('open'));
-  document.getElementById('closeModal').addEventListener('click', () => backdrop.classList.remove('open'));
-  backdrop.addEventListener('click', (e) => { if(e.target === backdrop) backdrop.classList.remove('open'); });
+  document.getElementById('closeModal').addEventListener('click',  () => backdrop.classList.remove('open'));
+  backdrop.addEventListener('click', e => { if(e.target === backdrop) backdrop.classList.remove('open'); });
 </script>
 
 </body>
