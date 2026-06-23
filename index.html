@@ -422,7 +422,7 @@
   for(let v = 4; v <= 5000; v++) DOSE_VALUES.push(v);
 
   // qty values 0–500
-  const QTY_VALUES = Array.from({length:500}, (_,i) => i+1);
+  const QTY_VALUES = Array.from({length:501}, (_,i) => i);
 
   // ── BUTTON GROUPS ──────────────────────────────────────
   document.querySelectorAll('.btn-group, .pill-group').forEach(group => {
