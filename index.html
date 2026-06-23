@@ -298,11 +298,19 @@
       <button id="closeModal">&times;</button>
     </div>
     <div class="modal-body">
-      <p class="field-label">Last quantity</p>
+      <p class="field-label">Last quantity / Dose</p>
       <div class="row" style="margin-bottom:16px;">
         <div>
           <div class="roller-wrap" id="rollerLastQty">
             <div class="roller-track" id="trackLastQty"></div>
+            <div class="roller-fade"></div>
+            <div class="roller-line-top"></div>
+            <div class="roller-line-bottom"></div>
+          </div>
+        </div>
+        <div>
+          <div class="roller-wrap" id="rollerLastDose">
+            <div class="roller-track" id="trackLastDose"></div>
             <div class="roller-fade"></div>
             <div class="roller-line-top"></div>
             <div class="roller-line-bottom"></div>
@@ -320,20 +328,7 @@
         <button data-value="Q2h" data-mult="12" class="active">Q2h</button>
       </div>
 
-      <div class="row">
-        <div>
-          <p class="field-label">Dose</p>
-          <div class="roller-wrap" id="rollerLastDose">
-            <div class="roller-track" id="trackLastDose"></div>
-            <div class="roller-fade"></div>
-            <div class="roller-line-top"></div>
-            <div class="roller-line-bottom"></div>
-          </div>
-        </div>
-      </div>
-
       <div class="toggle-row">
-        <label class="toggle" id="lastPrnWrap">
           <input type="checkbox" id="lastPRN">
           <span>PRN</span>
         </label>
