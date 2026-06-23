@@ -385,10 +385,10 @@
     rollerState[key] = values[idx];
 
     // scroll without animation on init
-    requestAnimationFrame(() => {
-      track.scrollTop = idx * ITEM_H;
-      highlightCenter(track, values);
-    });
+    setTimeout(() => {
+  track.scrollTop = idx * ITEM_H;
+  highlightCenter(track, values);
+}, 50);
 
     // listen for scroll end
     let scrollTimer;
