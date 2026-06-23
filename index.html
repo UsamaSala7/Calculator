@@ -538,7 +538,7 @@
   // ── INIT ──────────────────────────────────────────────
   buildRoller('trackNewDose',  DOSE_VALUES, 1);
   buildRoller('trackLastDose', DOSE_VALUES, 1);
-  buildRoller('trackLastQty',  QTY_VALUES,  1);
+  buildRoller('trackLastQty',  QTY_VALUES,  0);
 
   document.getElementById('lastDate').value = todaySA();
   document.getElementById('newDate').textContent = fmtDate({value: todaySA()});
