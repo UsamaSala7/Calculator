@@ -66,12 +66,12 @@
   .row{display:flex;gap:10px;margin-bottom:16px;}
   .row > div{flex:1;}
 
-  input[type="date"]{
+  input[type="date"], .manual-input{
     width:100%;border:1.5px solid var(--line);border-radius:12px;
     padding:11px 12px;font-family:inherit;font-size:15px;font-weight:600;
-    color:var(--ink);background:#fff;
+    color:var(--ink);background:#fff;margin-bottom:8px;
   }
-  input:focus{outline:none;border-color:var(--green);}
+  input:focus, .manual-input:focus{outline:none;border-color:var(--green);}
 
   .readonly-field{
     border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;
@@ -178,7 +178,7 @@
   .modal-sheet .roller-line-top,
   .modal-sheet .roller-line-bottom{background:#1E4976;}
   .modal-sheet .roller-item.selected{color:#1E4976;}
-  .modal-sheet input[type="date"]:focus{border-color:#1E4976;}
+  .modal-sheet input[type="date"]:focus, .modal-sheet .manual-input:focus{border-color:#1E4976;}
   .modal-sheet .toggle.on{background:#E3EBF4;border-color:#1E4976;color:#1E4976;}
 
   footer{margin-top:30px;padding:0 4px;}
@@ -213,6 +213,7 @@
       <div class="row">
         <div>
           <p class="field-label">Dose</p>
+          <input type="number" id="inputNewDose" class="manual-input" placeholder="Type dose..." step="any">
           <div class="roller-wrap" id="rollerNewDose">
             <div class="roller-track" id="trackNewDose"></div>
             <div class="roller-fade"></div>
@@ -222,6 +223,7 @@
         </div>
         <div>
           <p class="field-label">Duration (days)</p>
+          <div style="height: 44px; margin-bottom: 8px;"></div> <!-- Spacer to align with Dose input -->
           <div class="roller-wrap" id="rollerNewDays">
             <div class="roller-track" id="trackNewDays"></div>
             <div class="roller-fade"></div>
@@ -296,6 +298,7 @@
       </div>
       <div class="row" style="margin-bottom:16px;">
         <div>
+          <input type="number" id="inputLastQty" class="manual-input" placeholder="Type qty..." step="any">
           <div class="roller-wrap" id="rollerLastQty">
             <div class="roller-track" id="trackLastQty"></div>
             <div class="roller-fade"></div>
@@ -304,6 +307,7 @@
           </div>
         </div>
         <div>
+          <input type="number" id="inputLastDose" class="manual-input" placeholder="Type dose..." step="any">
           <div class="roller-wrap" id="rollerLastDose">
             <div class="roller-track" id="trackLastDose"></div>
             <div class="roller-fade"></div>
@@ -356,8 +360,17 @@
   const ITEM_H = 48;
   const rollerState = {};
 
-  function buildRoller(trackId, values, defaultValue) {
+  // Original arrays from your file
+  const DOSE_VALUES = [];
+  for(let v = 0.5; v <= 3; v = Math.round((v + 0.5) * 10) / 10) DOSE_VALUES.push(v);
+  for(let v = 4; v <= 5000; v++) DOSE_VALUES.push(v);
+
+  const QTY_VALUES = Array.from({length: 5001}, (_, i) => i);
+  const DAYS_VALUES = Array.from({length: 90}, (_, i) => i + 1);
+
+  function buildRoller(trackId, values, defaultValue, inputId) {
     const track = document.getElementById(trackId);
+    const input = inputId ? document.getElementById(inputId) : null;
 
     const spacerTop = document.createElement('div');
     spacerTop.className = 'roller-spacer';
@@ -378,6 +391,7 @@
     const defaultIdx = values.indexOf(defaultValue);
     const idx = defaultIdx >= 0 ? defaultIdx : 0;
     rollerState[trackId] = values[idx];
+    if (input) input.value = values[idx];
 
     setTimeout(() => {
       track.scrollTop = idx * ITEM_H;
@@ -390,11 +404,36 @@
       scrollTimer = setTimeout(() => {
         const snappedIdx = Math.round(track.scrollTop / ITEM_H);
         const clampedIdx = Math.max(0, Math.min(values.length - 1, snappedIdx));
-        rollerState[trackId] = values[clampedIdx];
+        const newValue = values[clampedIdx];
+        rollerState[trackId] = newValue;
+        if (input && document.activeElement !== input) {
+          input.value = newValue;
+        }
         highlightCenter(track);
         runUpdates();
       }, 80);
     });
+
+    if (input) {
+      input.addEventListener('input', () => {
+        const val = parseFloat(input.value);
+        if (!isNaN(val)) {
+          rollerState[trackId] = val;
+          // Find closest value in original array to scroll to
+          let closestIdx = 0;
+          let minDiff = Math.abs(values[0] - val);
+          for (let i = 1; i < values.length; i++) {
+            let diff = Math.abs(values[i] - val);
+            if (diff < minDiff) {
+              minDiff = diff;
+              closestIdx = i;
+            }
+          }
+          track.scrollTo({ top: closestIdx * ITEM_H, behavior: 'smooth' });
+          runUpdates();
+        }
+      });
+    }
   }
 
   function highlightCenter(track) {
@@ -412,19 +451,13 @@
     const whole = Math.floor(n);
     const frac  = n - whole;
     if(Math.abs(frac - 0.5) < 0.001) return whole === 0 ? '\u00BD' : `${whole}\u00BD`;
-    return (Math.round(n * 100) / 100).toString();
+    return n;
   }
 
-  // Dose: 0.5 steps to 3, then integers to 5000
-  const DOSE_VALUES = [];
-  for(let v = 0.5; v <= 3; v = Math.round((v + 0.5) * 10) / 10) DOSE_VALUES.push(v);
-  for(let v = 4; v <= 5000; v++) DOSE_VALUES.push(v);
-
-  // Qty: 0–500
-  const QTY_VALUES = Array.from({length: 5001}, (_, i) => i);
-
-  // Days: 1–90
-  const DAYS_VALUES = Array.from({length: 90}, (_, i) => i + 1);
+  function formatNum(n) {
+    const r = Math.round(n * 10) / 10;
+    return Number.isInteger(r) ? r.toString() : r.toFixed(1);
+  }
 
   // ── BUTTON GROUPS ──
   document.querySelectorAll('.btn-group').forEach(group => {
@@ -447,7 +480,6 @@
     });
   });
 
-  // ── HELPERS ──
   function getActive(groupSelector, attr) {
     const el = document.querySelector(`.btn-group[data-group="${groupSelector}"] button.active`);
     if(!el) return null;
@@ -470,12 +502,6 @@
     return Math.max(0, Math.floor((today - start) / 86400000));
   }
 
-  function formatNum(n) {
-    const r = Math.round(n * 10) / 10;
-    return Number.isInteger(r) ? r.toString() : r.toFixed(1);
-  }
-
-  // ── CALCULATIONS ──
   let currentSupply = 0;
 
   function updateLast() {
@@ -522,10 +548,10 @@
   function runUpdates() { updateLast(); updateNew(); }
 
   // ── INIT ──
-  buildRoller('trackNewDose',  DOSE_VALUES, 1);
+  buildRoller('trackNewDose',  DOSE_VALUES, 1, 'inputNewDose');
   buildRoller('trackNewDays',  DAYS_VALUES, 90);
-  buildRoller('trackLastDose', DOSE_VALUES, 1);
-  buildRoller('trackLastQty',  QTY_VALUES,  0);
+  buildRoller('trackLastDose', DOSE_VALUES, 1, 'inputLastDose');
+  buildRoller('trackLastQty',  QTY_VALUES,  0, 'inputLastQty');
 
   document.getElementById('lastDate').value = todaySA();
   document.getElementById('newDate').textContent = fmtDate({value: todaySA()});
