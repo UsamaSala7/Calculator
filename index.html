@@ -223,8 +223,17 @@
         </div>
         <div>
           <p class="field-label">Duration (days)</p>
-          <div style="height: 44px; margin-bottom: 8px;"></div> <!-- Spacer to align with Dose input -->
-          <div class="roller-wrap" id="rollerNewDays">
+
+<input
+  type="number"
+  id="inputNewDays"
+  class="manual-input"
+  placeholder="Type days..."
+  min="1"
+  step="1"
+>
+
+<div class="roller-wrap" id="rollerNewDays">
             <div class="roller-track" id="trackNewDays"></div>
             <div class="roller-fade"></div>
             <div class="roller-line-top"></div>
@@ -448,11 +457,16 @@ for(let v = 4; v <= 5000; v++) DOSE_VALUES.push(v);
   }
 
   function formatLabel(n) {
-    const whole = Math.floor(n);
-    const frac  = n - whole;
-    if(Math.abs(frac - 0.5) < 0.001) return whole === 0 ? '\u00BD' : `${whole}\u00BD`;
-    return n;
-  }
+  if (Math.abs(n - 0.25) < 0.001) return '¼';
+
+  const whole = Math.floor(n);
+  const frac  = n - whole;
+
+  if(Math.abs(frac - 0.5) < 0.001)
+    return whole === 0 ? '½' : `${whole}½`;
+
+  return n;
+}
 
   function formatNum(n) {
     const r = Math.round(n * 10) / 10;
@@ -549,7 +563,7 @@ for(let v = 4; v <= 5000; v++) DOSE_VALUES.push(v);
 
   // ── INIT ──
   buildRoller('trackNewDose',  DOSE_VALUES, 1, 'inputNewDose');
-  buildRoller('trackNewDays',  DAYS_VALUES, 90);
+  buildRoller('trackNewDays', DAYS_VALUES, 90, 'inputNewDays');
   buildRoller('trackLastDose', DOSE_VALUES, 1, 'inputLastDose');
   buildRoller('trackLastQty',  QTY_VALUES,  0, 'inputLastQty');
 
