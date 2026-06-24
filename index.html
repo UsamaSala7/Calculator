@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -64,13 +63,6 @@
   }
   .btn-group button.active{background:var(--green);border-color:var(--green);color:#fff;}
 
-  .pill-group{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:16px;}
-  .pill-group button{
-    aspect-ratio:1/1;border:1.5px solid var(--line);background:#fff;color:var(--ink);
-    border-radius:999px;font-family:inherit;font-size:12.5px;font-weight:700;min-height:40px;
-  }
-  .pill-group button.active{background:var(--green);border-color:var(--green);color:#fff;}
-
   .row{display:flex;gap:10px;margin-bottom:16px;}
   .row > div{flex:1;}
 
@@ -99,22 +91,17 @@
     scrollbar-width:none;
   }
   .roller-track::-webkit-scrollbar{display:none;}
-  .roller-spacer{
-    height:var(--item-h);flex-shrink:0;
-    scroll-snap-align:none;
-  }
+  .roller-spacer{height:var(--item-h);flex-shrink:0;scroll-snap-align:none;}
   .roller-item{
     height:var(--item-h);
     display:flex;align-items:center;justify-content:center;
     font-size:17px;font-weight:700;
     scroll-snap-align:center;
     color:var(--ink-soft);
-    transition:color .15s, font-size .15s;
-    cursor:pointer;
-    user-select:none;
+    transition:color .15s,font-size .15s;
+    cursor:pointer;user-select:none;
   }
   .roller-item.selected{color:var(--green-deep);font-size:20px;}
-  /* gradient overlay */
   .roller-fade{
     position:absolute;inset:0;pointer-events:none;
     background:linear-gradient(
@@ -126,8 +113,7 @@
       rgba(255,255,255,.92) 100%
     );
   }
-  /* center selection line */
-  .roller-line-top, .roller-line-bottom{
+  .roller-line-top,.roller-line-bottom{
     position:absolute;left:12px;right:12px;height:1.5px;
     background:var(--green);pointer-events:none;
   }
@@ -213,7 +199,7 @@
 <div class="wrap">
   <header>
     <h1>Prescription Calculator</h1>
-    <p>by Dr. Faisal Al-Anzy</p>
+    <p>by Faisal Alanzy & Yara Alomari</p>
   </header>
 
   <div class="supply-bar">Supply: <span id="supplyValueTop">0</span> units</div>
@@ -222,6 +208,8 @@
   <div class="card">
     <div class="card-head">New prescription</div>
     <div class="card-body">
+
+      <!-- Row 1: Dose | Duration -->
       <div class="row">
         <div>
           <p class="field-label">Dose</p>
@@ -233,21 +221,28 @@
           </div>
         </div>
         <div>
-          <p class="field-label">Date</p>
-          <div class="readonly-field" id="newDate">—</div>
+          <p class="field-label">Duration (days)</p>
+          <div class="roller-wrap" id="rollerNewDays">
+            <div class="roller-track" id="trackNewDays"></div>
+            <div class="roller-fade"></div>
+            <div class="roller-line-top"></div>
+            <div class="roller-line-bottom"></div>
+          </div>
         </div>
       </div>
 
+      <!-- Frequency -->
       <p class="field-label">Frequency</p>
       <div class="btn-group" data-group="newFreq">
         <button data-value="OD"  data-mult="1" class="active">OD</button>
         <button data-value="BID" data-mult="2">BID</button>
         <button data-value="TID" data-mult="3">TID</button>
         <button data-value="QID" data-mult="4">QID</button>
-        <button data-value="Q4h" data-mult="6" >Q4h</button>
+        <button data-value="Q4h" data-mult="6">Q4h</button>
         <button data-value="Q2h" data-mult="12">Q2h</button>
       </div>
 
+      <!-- PRN -->
       <div class="toggle-row">
         <label class="toggle" id="newPrnWrap">
           <input type="checkbox" id="newPRN">
@@ -255,22 +250,16 @@
         </label>
       </div>
 
-      <p class="field-label">Duration (days)</p>
-      <div class="pill-group" data-group="newDays">
-        <button data-value="1">1</button>
-        <button data-value="7">7</button>
-        <button data-value="14">14</button>
-        <button data-value="28">28</button>
-        <button data-value="56">56</button>
-        <button data-value="84">84</button>
-        <button data-value="3">3</button>
-        <button data-value="10">10</button>
-        <button data-value="20">20</button>
-        <button data-value="30">30</button>
-        <button data-value="60">60</button>
-        <button data-value="90" class="active">90</button>
+      <!-- Date (read-only, SA time) -->
+      <div class="row" style="margin-bottom:16px;">
+        <div>
+          <p class="field-label">Date</p>
+          <div class="readonly-field" id="newDate">—</div>
+        </div>
+        <div></div>
       </div>
 
+      <!-- Summary -->
       <div class="summary">
         <div class="line1" id="newLine1">—</div>
         <div class="line2" id="newLine2">—</div>
@@ -299,11 +288,13 @@
       <button id="closeModal">&times;</button>
     </div>
     <div class="modal-body">
-    <div class="row" style="margin-bottom:16px;">
-  <div><p class="field-label">Last quantity</p></div>
-  <div><p class="field-label">Dose</p></div>
-</div>
-<div class="row" style="margin-bottom:16px;">
+
+      <!-- Row: Last quantity | Dose -->
+      <div class="row" style="margin-bottom:0;">
+        <div><p class="field-label">Last quantity</p></div>
+        <div><p class="field-label">Dose</p></div>
+      </div>
+      <div class="row" style="margin-bottom:16px;">
         <div>
           <div class="roller-wrap" id="rollerLastQty">
             <div class="roller-track" id="trackLastQty"></div>
@@ -322,6 +313,7 @@
         </div>
       </div>
 
+      <!-- Frequency -->
       <p class="field-label">Frequency</p>
       <div class="btn-group" data-group="lastFreq">
         <button data-value="OD"  data-mult="1" class="active">OD</button>
@@ -332,6 +324,7 @@
         <button data-value="Q2h" data-mult="12">Q2h</button>
       </div>
 
+      <!-- PRN -->
       <div class="toggle-row">
         <label class="toggle" id="lastPrnWrap">
           <input type="checkbox" id="lastPRN">
@@ -339,11 +332,14 @@
         </label>
       </div>
 
+      <!-- Date -->
       <p class="field-label">Date</p>
       <div class="row" style="margin-bottom:16px;">
         <div><input type="date" id="lastDate"></div>
+        <div></div>
       </div>
 
+      <!-- Summary -->
       <div class="summary">
         <div class="line1" id="lastLine1">—</div>
         <div class="line2" id="lastLine2">—</div>
@@ -357,23 +353,20 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  // ── ROLLER ENGINE ──────────────────────────────────────
   const ITEM_H = 48;
   const rollerState = {};
 
   function buildRoller(trackId, values, defaultValue) {
     const track = document.getElementById(trackId);
-    const key   = trackId; // use trackId as state key
 
-    // spacer before and after so first/last items can center
     const spacerTop = document.createElement('div');
     spacerTop.className = 'roller-spacer';
     track.appendChild(spacerTop);
 
-    values.forEach((v, i) => {
+    values.forEach(v => {
       const el = document.createElement('div');
       el.className = 'roller-item';
-      el.textContent = formatDose(v);
+      el.textContent = formatLabel(v);
       el.dataset.value = v;
       track.appendChild(el);
     });
@@ -382,53 +375,59 @@
     spacerBot.className = 'roller-spacer';
     track.appendChild(spacerBot);
 
-    // set initial scroll
     const defaultIdx = values.indexOf(defaultValue);
     const idx = defaultIdx >= 0 ? defaultIdx : 0;
-    rollerState[key] = values[idx];
+    rollerState[trackId] = values[idx];
 
-    // scroll without animation on init
     setTimeout(() => {
-  track.scrollTop = idx * ITEM_H;
-  highlightCenter(track, values);
-}, 50);
+      track.scrollTop = idx * ITEM_H;
+      highlightCenter(track);
+    }, 50);
 
-    // listen for scroll end
     let scrollTimer;
     track.addEventListener('scroll', () => {
       clearTimeout(scrollTimer);
       scrollTimer = setTimeout(() => {
         const snappedIdx = Math.round(track.scrollTop / ITEM_H);
         const clampedIdx = Math.max(0, Math.min(values.length - 1, snappedIdx));
-        rollerState[key] = values[clampedIdx];
-        highlightCenter(track, values);
+        rollerState[trackId] = values[clampedIdx];
+        highlightCenter(track);
         runUpdates();
       }, 80);
     });
   }
 
-  function highlightCenter(track, values) {
+  function highlightCenter(track) {
     const idx = Math.round(track.scrollTop / ITEM_H);
-    const items = track.querySelectorAll('.roller-item');
-    items.forEach((el, i) => {
+    track.querySelectorAll('.roller-item').forEach((el, i) => {
       el.classList.toggle('selected', i === idx);
     });
   }
 
   function getRollerValue(trackId) {
-    return rollerState[trackId] || 0;
+    return rollerState[trackId] ?? 0;
   }
 
-  // dose values: 0.5 steps up to 3, then integer steps to 5000
+  function formatLabel(n) {
+    const whole = Math.floor(n);
+    const frac  = n - whole;
+    if(Math.abs(frac - 0.5) < 0.001) return whole === 0 ? '\u00BD' : `${whole}\u00BD`;
+    return (Math.round(n * 100) / 100).toString();
+  }
+
+  // Dose: 0.5 steps to 3, then integers to 5000
   const DOSE_VALUES = [];
-  for(let v = 0.5; v <= 3; v = Math.round((v + 0.5)*10)/10) DOSE_VALUES.push(v);
+  for(let v = 0.5; v <= 3; v = Math.round((v + 0.5) * 10) / 10) DOSE_VALUES.push(v);
   for(let v = 4; v <= 5000; v++) DOSE_VALUES.push(v);
 
-  // qty values 0–500
-  const QTY_VALUES = Array.from({length:501}, (_,i) => i);
+  // Qty: 0–500
+  const QTY_VALUES = Array.from({length: 501}, (_, i) => i);
 
-  // ── BUTTON GROUPS ──────────────────────────────────────
-  document.querySelectorAll('.btn-group, .pill-group').forEach(group => {
+  // Days: 1–90
+  const DAYS_VALUES = Array.from({length: 90}, (_, i) => i + 1);
+
+  // ── BUTTON GROUPS ──
+  document.querySelectorAll('.btn-group').forEach(group => {
     group.addEventListener('click', e => {
       const btn = e.target.closest('button');
       if(!btn) return;
@@ -438,7 +437,7 @@
     });
   });
 
-  // ── TOGGLES ───────────────────────────────────────────
+  // ── TOGGLES ──
   document.querySelectorAll('.toggle').forEach(t => {
     const input = t.querySelector('input');
     t.addEventListener('click', () => {
@@ -448,63 +447,47 @@
     });
   });
 
-  // ── HELPERS ───────────────────────────────────────────
-  function getActive(groupSelector, attr){
-    const el = document.querySelector(
-      `.btn-group[data-group="${groupSelector}"] button.active,` +
-      `.pill-group[data-group="${groupSelector}"] button.active`
-    );
+  // ── HELPERS ──
+  function getActive(groupSelector, attr) {
+    const el = document.querySelector(`.btn-group[data-group="${groupSelector}"] button.active`);
     if(!el) return null;
     return attr ? el.dataset[attr] : el.dataset.value;
   }
 
-  function todaySA(){
-    const fmt = new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Riyadh',year:'numeric',month:'2-digit',day:'2-digit'});
-    return fmt.format(new Date());
+  function todaySA() {
+    return new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Riyadh', year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date());
   }
 
-  function fmtDate(input){
+  function fmtDate(input) {
     if(!input.value) return '\u2014';
-    const d = new Date(input.value + 'T00:00:00');
-    return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
+    return new Date(input.value + 'T00:00:00').toLocaleDateString('en-GB', {day:'2-digit', month:'short'});
   }
 
-  function daysSince(input){
+  function daysSince(input) {
     if(!input.value) return 0;
     const start = new Date(input.value + 'T00:00:00');
-    const today = new Date(todaySA()  + 'T00:00:00');
-    const diff  = Math.floor((today - start)/(1000*60*60*24));
-    return Math.max(0, diff);
+    const today = new Date(todaySA() + 'T00:00:00');
+    return Math.max(0, Math.floor((today - start) / 86400000));
   }
 
-  function formatDose(n){
-    const whole = Math.floor(n);
-    const frac  = n - whole;
-    if(Math.abs(frac - 0.5) < 0.001){
-      return whole === 0 ? '\u00BD' : `${whole}\u00BD`;
-    }
-    return (Math.round(n*100)/100).toString();
-  }
-
-  function formatNum(n){
-    const r = Math.round(n*10)/10;
+  function formatNum(n) {
+    const r = Math.round(n * 10) / 10;
     return Number.isInteger(r) ? r.toString() : r.toFixed(1);
   }
 
-  // ── CALCULATIONS ──────────────────────────────────────
+  // ── CALCULATIONS ──
   let currentSupply = 0;
 
-  function updateLast(){
-    const mult = parseFloat(getActive('lastFreq','mult')) || 0;
+  function updateLast() {
+    const mult = parseFloat(getActive('lastFreq', 'mult')) || 0;
     const dose = getRollerValue('trackLastDose');
     const qty  = getRollerValue('trackLastQty');
     const prn  = document.getElementById('lastPRN').checked;
     const dateInput = document.getElementById('lastDate');
-    const dateTxt   = fmtDate(dateInput);
-    const days      = daysSince(dateInput);
+    const days = daysSince(dateInput);
 
     let daily = dose * mult;
-    if(prn) daily = daily * (2/3);
+    if(prn) daily *= (2/3);
 
     const supply = Math.max(0, qty - days * daily);
     currentSupply = supply;
@@ -512,40 +495,40 @@
     const prnTxt = prn ? ' PRN' : '';
     document.getElementById('lastLine1').textContent = `Total of ${formatNum(qty)} Unit`;
     document.getElementById('lastLine2').textContent =
-      `${formatDose(dose)} Unit ${formatNum(mult)} daily${prnTxt} from ${dateTxt} (${days} days)`;
+      `${formatLabel(dose)} Unit ${formatNum(mult)} daily${prnTxt} from ${fmtDate(dateInput)} (${days} days)`;
     document.getElementById('lastSupplyLine').textContent = `Supply is ${formatNum(supply)}`;
-    document.getElementById('supplyValueTop').textContent  = formatNum(supply);
+    document.getElementById('supplyValueTop').textContent = formatNum(supply);
   }
 
-  function updateNew(){
-    const mult = parseFloat(getActive('newFreq','mult')) || 0;
+  function updateNew() {
+    const mult = parseFloat(getActive('newFreq', 'mult')) || 0;
     const dose = getRollerValue('trackNewDose');
+    const days = getRollerValue('trackNewDays');
     const prn  = document.getElementById('newPRN').checked;
-    const days = parseFloat(getActive('newDays')) || 0;
 
     let daily = dose * mult;
-    if(prn) daily = daily * (2/3);
+    if(prn) daily *= (2/3);
 
     const total  = daily * days;
     const needed = Math.max(0, total - currentSupply);
 
     const prnTxt = prn ? ' PRN' : '';
-    document.getElementById('newLine1').textContent = `${formatDose(dose)} Unit ${formatNum(mult)} daily${prnTxt} For ${days} Days`;
+    document.getElementById('newLine1').textContent = `${formatLabel(dose)} Unit ${formatNum(mult)} daily${prnTxt} For ${days} Days`;
     document.getElementById('newLine2').textContent = `The Total is ${formatNum(total)}`;
-    document.getElementById('newSupplyLine').textContent  = `Supply is ${formatNum(currentSupply)}`;
-    document.getElementById('newNeededLine').textContent  = `Quantity needed ${formatNum(needed)}`;
+    document.getElementById('newSupplyLine').textContent = `Supply is ${formatNum(currentSupply)}`;
+    document.getElementById('newNeededLine').textContent = `Quantity needed ${formatNum(needed)}`;
   }
 
-  function runUpdates(){ updateLast(); updateNew(); }
+  function runUpdates() { updateLast(); updateNew(); }
 
-  // ── INIT ──────────────────────────────────────────────
+  // ── INIT ──
   buildRoller('trackNewDose',  DOSE_VALUES, 1);
+  buildRoller('trackNewDays',  DAYS_VALUES, 90);
   buildRoller('trackLastDose', DOSE_VALUES, 1);
   buildRoller('trackLastQty',  QTY_VALUES,  0);
 
   document.getElementById('lastDate').value = todaySA();
   document.getElementById('newDate').textContent = fmtDate({value: todaySA()});
-
   document.getElementById('lastDate').addEventListener('change', runUpdates);
 
   document.querySelectorAll('.toggle').forEach(t => {
@@ -554,23 +537,19 @@
 
   runUpdates();
 
-  // ── MODAL ─────────────────────────────────────────────
+  // ── MODAL ──
   const backdrop = document.getElementById('modalBackdrop');
   document.getElementById('openLastBtn').addEventListener('click', () => {
-  backdrop.classList.add('open');
-  setTimeout(() => {
-    ['trackLastDose', 'trackLastQty'].forEach(trackId => {
-      const track = document.getElementById(trackId);
-      const values = trackId === 'trackLastQty' ? QTY_VALUES : DOSE_VALUES;
-      const idx = values.indexOf(rollerState[trackId]);
-      if(idx >= 0){
-        track.scrollTop = idx * ITEM_H;
-        highlightCenter(track, values);
-      }
-    });
-  }, 50);
-});
-  document.getElementById('closeModal').addEventListener('click',  () => backdrop.classList.remove('open'));
+    backdrop.classList.add('open');
+    setTimeout(() => {
+      [['trackLastDose', DOSE_VALUES], ['trackLastQty', QTY_VALUES]].forEach(([trackId, values]) => {
+        const track = document.getElementById(trackId);
+        const idx = values.indexOf(rollerState[trackId]);
+        if(idx >= 0) { track.scrollTop = idx * ITEM_H; highlightCenter(track); }
+      });
+    }, 50);
+  });
+  document.getElementById('closeModal').addEventListener('click', () => backdrop.classList.remove('open'));
   backdrop.addEventListener('click', e => { if(e.target === backdrop) backdrop.classList.remove('open'); });
 </script>
 
