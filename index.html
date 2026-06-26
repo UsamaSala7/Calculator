@@ -372,8 +372,8 @@
 
   // Original arrays from your file
   const DOSE_VALUES = [0.25];
-for(let v = 0.5; v <= 3; v = Math.round((v + 0.5) * 10) / 10) DOSE_VALUES.push(v);
-for(let v = 4; v <= 5000; v++) DOSE_VALUES.push(v);
+for(let v = 0.5; v <= 10; v = Math.round((v + 0.5) * 10) / 10) DOSE_VALUES.push(v);
+for(let v = 11; v <= 5000; v++) DOSE_VALUES.push(v);
 
   const QTY_VALUES = Array.from({length: 5001}, (_, i) => i);
   const DAYS_VALUES = Array.from({length: 90}, (_, i) => i + 1);
