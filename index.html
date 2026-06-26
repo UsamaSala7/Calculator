@@ -18,232 +18,129 @@
     --line:#DDE5E1;
     --amber:#B7791F;
     --amber-tint:#FBF1DF;
-    --shadow: 0 1px 2px rgba(15,30,22,.04), 0 6px 16px rgba(15,30,22,.06);
-    --item-h: 48px;
+    --red:#C0392B;
+    --shadow:0 1px 2px rgba(15,30,22,.04),0 6px 16px rgba(15,30,22,.06);
+    --item-h:48px;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
-  body{
-    background:var(--bg);
-    color:var(--ink);
-    font-family:'Inter',sans-serif;
-    -webkit-tap-highlight-color:transparent;
-    padding-bottom:60px;
-  }
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-tap-highlight-color:transparent;padding-bottom:60px;}
   .wrap{max-width:480px;margin:0 auto;padding:18px 14px 0;}
 
-  header{padding:6px 4px 4px;}
-  header h1{font-size:21px;font-weight:800;margin:0 0 2px;}
-  header p{font-size:12.5px;color:var(--ink-soft);margin:0;font-weight:600;}
+  header{padding:6px 4px 4px;display:flex;align-items:center;justify-content:space-between;}
+  header div h1{font-size:21px;font-weight:800;margin:0 0 2px;}
+  header div p{font-size:12.5px;color:var(--ink-soft);margin:0;font-weight:600;}
+  .reset-btn{background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:8px 14px;font-family:inherit;font-size:12.5px;font-weight:700;color:var(--ink-soft);}
+  .reset-btn:active{background:#F1F4F2;}
 
-  .supply-bar{
-    position:sticky;top:0;z-index:5;
-    background:var(--green-deep);color:#fff;
-    border-radius:14px;padding:12px 16px;
-    margin:14px 0;font-size:15px;font-weight:800;
-    text-align:center;box-shadow:var(--shadow);
-  }
+  .supply-bar{position:sticky;top:0;z-index:5;background:var(--green-deep);color:#fff;border-radius:14px;padding:12px 16px;margin:14px 0;font-size:15px;font-weight:800;text-align:center;box-shadow:var(--shadow);}
   .supply-bar span{font-size:18px;}
 
-  .card{
-    background:var(--card);border-radius:18px;
-    box-shadow:var(--shadow);border:1px solid var(--line);
-    margin-bottom:18px;overflow:hidden;
-  }
+  .card{background:var(--card);border-radius:18px;box-shadow:var(--shadow);border:1px solid var(--line);margin-bottom:18px;overflow:hidden;}
   .card-head{background:var(--green);color:#fff;padding:14px 16px;font-size:16px;font-weight:700;}
   .card-body{padding:16px;}
 
   .field-label{font-size:12px;color:var(--ink-soft);font-weight:700;margin:0 0 8px;text-transform:uppercase;letter-spacing:.02em;}
 
   .btn-group{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
-  .btn-group button{
-    border:1.5px solid var(--line);background:#fff;color:var(--ink);
-    border-radius:12px;padding:12px 4px;font-family:inherit;
-    font-size:14px;font-weight:700;min-height:48px;
-  }
+  .btn-group button{border:1.5px solid var(--line);background:#fff;color:var(--ink);border-radius:12px;padding:12px 4px;font-family:inherit;font-size:14px;font-weight:700;min-height:48px;}
   .btn-group button.active{background:var(--green);border-color:var(--green);color:#fff;}
 
   .row{display:flex;gap:10px;margin-bottom:16px;}
-  .row > div{flex:1;}
+  .row>div{flex:1;}
 
-  input[type="date"], .manual-input{
-    width:100%;border:1.5px solid var(--line);border-radius:12px;
-    padding:11px 12px;font-family:inherit;font-size:15px;font-weight:600;
-    color:var(--ink);background:#fff;margin-bottom:8px;
-  }
-  input:focus, .manual-input:focus{outline:none;border-color:var(--green);}
+  input[type="date"],.manual-input{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;font-family:inherit;font-size:15px;font-weight:600;color:var(--ink);background:#fff;margin-bottom:8px;}
+  input:focus,.manual-input:focus{outline:none;border-color:var(--green);}
 
-  .readonly-field{
-    border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;
-    font-size:15px;font-weight:600;color:var(--ink-soft);background:#F1F4F2;
-  }
+  .readonly-field{border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;font-size:15px;font-weight:600;color:var(--ink-soft);background:#F1F4F2;}
 
-  /* ── ROLLER ── */
-  .roller-wrap{
-    border:1.5px solid var(--line);border-radius:12px;
-    background:#fff;overflow:hidden;position:relative;
-    height:calc(var(--item-h)*3);
-  }
-  .roller-track{
-    overflow-y:scroll;height:100%;
-    scroll-snap-type:y mandatory;
-    -webkit-overflow-scrolling:touch;
-    scrollbar-width:none;
-  }
+  .roller-wrap{border:1.5px solid var(--line);border-radius:12px;background:#fff;overflow:hidden;position:relative;height:calc(var(--item-h)*3);}
+  .roller-track{overflow-y:scroll;height:100%;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
   .roller-track::-webkit-scrollbar{display:none;}
   .roller-spacer{height:var(--item-h);flex-shrink:0;scroll-snap-align:none;}
-  .roller-item{
-    height:var(--item-h);
-    display:flex;align-items:center;justify-content:center;
-    font-size:17px;font-weight:700;
-    scroll-snap-align:center;
-    color:var(--ink-soft);
-    transition:color .15s,font-size .15s;
-    cursor:pointer;user-select:none;
-  }
+  .roller-item{height:var(--item-h);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;scroll-snap-align:center;color:var(--ink-soft);transition:color .15s,font-size .15s;cursor:pointer;user-select:none;}
   .roller-item.selected{color:var(--green-deep);font-size:20px;}
-  .roller-fade{
-    position:absolute;inset:0;pointer-events:none;
-    background:linear-gradient(
-      to bottom,
-      rgba(255,255,255,.92) 0%,
-      rgba(255,255,255,.3) 30%,
-      rgba(255,255,255,0) 50%,
-      rgba(255,255,255,.3) 70%,
-      rgba(255,255,255,.92) 100%
-    );
-  }
-  .roller-line-top,.roller-line-bottom{
-    position:absolute;left:12px;right:12px;height:1.5px;
-    background:var(--green);pointer-events:none;
-  }
+  .roller-fade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(255,255,255,.92) 0%,rgba(255,255,255,.3) 30%,rgba(255,255,255,0) 50%,rgba(255,255,255,.3) 70%,rgba(255,255,255,.92) 100%);}
+  .roller-line-top,.roller-line-bottom{position:absolute;left:12px;right:12px;height:1.5px;background:var(--green);pointer-events:none;}
   .roller-line-top{top:calc(var(--item-h) - 0.75px);}
   .roller-line-bottom{top:calc(var(--item-h)*2 - 0.75px);}
 
   .toggle-row{display:flex;gap:10px;margin-bottom:16px;}
-  .toggle{
-    flex:1;display:flex;align-items:center;justify-content:center;
-    gap:8px;border:1.5px solid var(--line);border-radius:12px;
-    padding:11px 8px;font-size:13.5px;font-weight:700;
-    color:var(--ink-soft);background:#fff;
-  }
+  .toggle{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--line);border-radius:12px;padding:11px 8px;font-size:13.5px;font-weight:700;color:var(--ink-soft);background:#fff;}
   .toggle.on{background:var(--amber-tint);border-color:var(--amber);color:var(--amber);}
   .toggle input{display:none;}
 
-  .summary{
-    background:var(--green-tint);border:1px solid var(--green);
-    border-radius:14px;padding:14px;text-align:center;
-  }
+  .summary{background:var(--green-tint);border:1px solid var(--green);border-radius:14px;padding:14px;text-align:center;}
   .summary .line1{font-size:15px;font-weight:700;color:var(--green-deep);margin-bottom:2px;}
   .summary .line2{font-size:13px;color:var(--ink-soft);margin-bottom:10px;}
   .summary hr{border:none;border-top:1px dashed #BEDCCB;margin:10px 0;}
   .summary .line3{font-size:13.5px;color:var(--ink-soft);font-weight:600;margin-bottom:4px;}
   .summary .line4{font-size:17px;color:var(--green-deep);font-weight:800;}
+  .summary .line4.warn{color:var(--red);}
 
-  .fab{
-    position:fixed;bottom:20px;right:20px;
-    background:#1E4976;color:#fff;border:none;
-    border-radius:999px;padding:14px 20px;font-family:inherit;
-    font-size:14px;font-weight:800;
-    box-shadow:0 8px 20px rgba(30,73,118,.35);z-index:20;
-  }
+  /* 2nd Rx toggle row */
+  .second-rx-toggle{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:14px;border-top:1px dashed #BEDCCB;}
+  .second-rx-toggle label{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;color:#1E4976;cursor:pointer;}
+  .second-rx-toggle input[type="checkbox"]{width:18px;height:18px;accent-color:#1E4976;}
+  .second-rx-section{margin-top:14px;display:none;}
+  .second-rx-section.open{display:block;}
+  .second-rx-head{background:#1E4976;color:#fff;border-radius:12px;padding:10px 14px;font-size:14px;font-weight:700;margin-bottom:14px;}
 
-  .modal-backdrop{
-    position:fixed;inset:0;background:rgba(15,30,22,.45);
-    z-index:30;display:none;align-items:flex-end;justify-content:center;
-  }
+  .fab{position:fixed;bottom:20px;right:20px;background:#1E4976;color:#fff;border:none;border-radius:999px;padding:14px 20px;font-family:inherit;font-size:14px;font-weight:800;box-shadow:0 8px 20px rgba(30,73,118,.35);z-index:20;}
+
+  .modal-backdrop{position:fixed;inset:0;background:rgba(15,30,22,.45);z-index:30;display:none;align-items:flex-end;justify-content:center;}
   .modal-backdrop.open{display:flex;}
-  .modal-sheet{
-    background:#fff;width:100%;max-width:480px;
-    border-radius:20px 20px 0 0;max-height:88vh;overflow-y:auto;
-    animation:slideUp .22s ease-out;
-  }
+  .modal-sheet{background:#fff;width:100%;max-width:480px;border-radius:20px 20px 0 0;max-height:88vh;overflow-y:auto;animation:slideUp .22s ease-out;}
   @keyframes slideUp{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
-  .modal-head{
-    position:sticky;top:0;background:#1E4976;color:#fff;
-    padding:14px 16px;font-size:16px;font-weight:700;
-    display:flex;align-items:center;justify-content:space-between;
-  }
-  .modal-head button{
-    background:rgba(255,255,255,.18);border:none;color:#fff;
-    width:30px;height:30px;border-radius:50%;font-size:16px;font-weight:700;
-  }
+  .modal-head{position:sticky;top:0;background:#1E4976;color:#fff;padding:14px 16px;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:space-between;}
+  .modal-head button{background:rgba(255,255,255,.18);border:none;color:#fff;width:30px;height:30px;border-radius:50%;font-size:16px;font-weight:700;}
   .modal-body{padding:16px;}
 
-  /* ── Last Rx modal blue overrides ── */
   .modal-sheet .summary{background:#E8F0F8;border-color:#1E4976;}
   .modal-sheet .summary .line1{color:#1E4976;}
   .modal-sheet .summary .line4{color:#1E4976;}
   .modal-sheet .btn-group button.active{background:#1E4976;border-color:#1E4976;}
-  .modal-sheet .roller-line-top,
-  .modal-sheet .roller-line-bottom{background:#1E4976;}
+  .modal-sheet .roller-line-top,.modal-sheet .roller-line-bottom{background:#1E4976;}
   .modal-sheet .roller-item.selected{color:#1E4976;}
-  .modal-sheet input[type="date"]:focus, .modal-sheet .manual-input:focus{border-color:#1E4976;}
+  .modal-sheet input[type="date"]:focus,.modal-sheet .manual-input:focus{border-color:#1E4976;}
   .modal-sheet .toggle.on{background:#E3EBF4;border-color:#1E4976;color:#1E4976;}
 
   footer{margin-top:30px;padding:0 4px;}
   .disclaimer{border-top:1px solid var(--line);padding-top:16px;font-size:11px;line-height:1.7;color:var(--ink-soft);}
   .disclaimer h3{font-size:11.5px;letter-spacing:.06em;color:var(--ink);margin:0 0 6px;}
 
-  .toast{
-    position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(20px);
-    background:var(--ink);color:#fff;padding:11px 20px;border-radius:999px;
-    font-size:13px;font-weight:700;
-    opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;z-index:40;
-  }
+  .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 20px;border-radius:999px;font-size:13px;font-weight:700;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;z-index:40;}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
-
 <div class="wrap">
   <header>
-    <h1>Prescription Calculator</h1>
-    <p>by Faisal Alanazi & Yara Alomari</p>
+    <div>
+      <h1>Prescription Calculator</h1>
+      <p>by Faisal Alanazi & Yara Alomari</p>
+    </div>
+    <button class="reset-btn" id="resetBtn">↺ Reset</button>
   </header>
 
   <div class="supply-bar">Supply: <span id="supplyValueTop">0</span> units</div>
 
-  <!-- NEW PRESCRIPTION -->
   <div class="card">
     <div class="card-head">New prescription</div>
     <div class="card-body">
-
-      <!-- Row 1: Dose | Duration -->
       <div class="row">
-          <div>
+        <div>
           <p class="field-label">Duration (days)</p>
-
-<input
-  type="number"
-  id="inputNewDays"
-  class="manual-input"
-  placeholder="Type days..."
-  min="1"
-  step="1"
->
-
-<div class="roller-wrap" id="rollerNewDays">
-            <div class="roller-track" id="trackNewDays"></div>
-            <div class="roller-fade"></div>
-            <div class="roller-line-top"></div>
-            <div class="roller-line-bottom"></div>
-          </div>
+          <input type="number" id="inputNewDays" class="manual-input" placeholder="Type days..." min="1" step="1">
+          <div class="roller-wrap"><div class="roller-track" id="trackNewDays"></div><div class="roller-fade"></div><div class="roller-line-top"></div><div class="roller-line-bottom"></div></div>
         </div>
         <div>
           <p class="field-label">Dose</p>
           <input type="number" id="inputNewDose" class="manual-input" placeholder="Type dose..." step="any">
-          <div class="roller-wrap" id="rollerNewDose">
-            <div class="roller-track" id="trackNewDose"></div>
-            <div class="roller-fade"></div>
-            <div class="roller-line-top"></div>
-            <div class="roller-line-bottom"></div>
-          </div>
+          <div class="roller-wrap"><div class="roller-track" id="trackNewDose"></div><div class="roller-fade"></div><div class="roller-line-top"></div><div class="roller-line-bottom"></div></div>
         </div>
-      
       </div>
 
-      <!-- Frequency -->
       <p class="field-label">Frequency</p>
       <div class="btn-group" data-group="newFreq">
         <button data-value="OD"  data-mult="1" class="active">OD</button>
@@ -254,24 +151,15 @@
         <button data-value="Q2h" data-mult="12">Q2h</button>
       </div>
 
-      <!-- PRN -->
       <div class="toggle-row">
-        <label class="toggle" id="newPrnWrap">
-          <input type="checkbox" id="newPRN">
-          <span>PRN</span>
-        </label>
+        <label class="toggle" id="newPrnWrap"><input type="checkbox" id="newPRN"><span>PRN</span></label>
       </div>
 
-      <!-- Date (read-only, SA time) -->
       <div class="row" style="margin-bottom:16px;">
-        <div>
-          <p class="field-label">Date</p>
-          <div class="readonly-field" id="newDate">—</div>
-        </div>
+        <div><p class="field-label">Date</p><div class="readonly-field" id="newDate">—</div></div>
         <div></div>
       </div>
 
-      <!-- Summary -->
       <div class="summary">
         <div class="line1" id="newLine1">—</div>
         <div class="line2" id="newLine2">—</div>
@@ -292,7 +180,6 @@
 
 <button class="fab" id="openLastBtn">Last Rx</button>
 
-<!-- LAST PRESCRIPTION MODAL -->
 <div class="modal-backdrop" id="modalBackdrop">
   <div class="modal-sheet">
     <div class="modal-head">
@@ -301,7 +188,7 @@
     </div>
     <div class="modal-body">
 
-      <!-- Row: Last quantity | Dose -->
+      <!-- 1st Last Rx -->
       <div class="row" style="margin-bottom:0;">
         <div><p class="field-label">Last quantity</p></div>
         <div><p class="field-label">Dose</p></div>
@@ -309,25 +196,14 @@
       <div class="row" style="margin-bottom:16px;">
         <div>
           <input type="number" id="inputLastQty" class="manual-input" placeholder="Type qty..." step="any">
-          <div class="roller-wrap" id="rollerLastQty">
-            <div class="roller-track" id="trackLastQty"></div>
-            <div class="roller-fade"></div>
-            <div class="roller-line-top"></div>
-            <div class="roller-line-bottom"></div>
-          </div>
+          <div class="roller-wrap"><div class="roller-track" id="trackLastQty"></div><div class="roller-fade"></div><div class="roller-line-top"></div><div class="roller-line-bottom"></div></div>
         </div>
         <div>
           <input type="number" id="inputLastDose" class="manual-input" placeholder="Type dose..." step="any">
-          <div class="roller-wrap" id="rollerLastDose">
-            <div class="roller-track" id="trackLastDose"></div>
-            <div class="roller-fade"></div>
-            <div class="roller-line-top"></div>
-            <div class="roller-line-bottom"></div>
-          </div>
+          <div class="roller-wrap"><div class="roller-track" id="trackLastDose"></div><div class="roller-fade"></div><div class="roller-line-top"></div><div class="roller-line-bottom"></div></div>
         </div>
       </div>
 
-      <!-- Frequency -->
       <p class="field-label">Frequency</p>
       <div class="btn-group" data-group="lastFreq">
         <button data-value="OD"  data-mult="1" class="active">OD</button>
@@ -338,28 +214,78 @@
         <button data-value="Q2h" data-mult="12">Q2h</button>
       </div>
 
-      <!-- PRN -->
       <div class="toggle-row">
-        <label class="toggle" id="lastPrnWrap">
-          <input type="checkbox" id="lastPRN">
-          <span>PRN</span>
-        </label>
+        <label class="toggle" id="lastPrnWrap"><input type="checkbox" id="lastPRN"><span>PRN</span></label>
       </div>
 
-      <!-- Date -->
       <p class="field-label">Date</p>
       <div class="row" style="margin-bottom:16px;">
         <div><input type="date" id="lastDate"></div>
         <div></div>
       </div>
 
-      <!-- Summary -->
       <div class="summary">
         <div class="line1" id="lastLine1">—</div>
         <div class="line2" id="lastLine2">—</div>
         <hr>
         <div class="line4" id="lastSupplyLine">Supply is 0</div>
       </div>
+
+      <!-- 2nd Last Rx toggle -->
+      <div class="second-rx-toggle">
+        <label>
+          <input type="checkbox" id="enable2ndRx">
+          2nd Last Rx
+        </label>
+      </div>
+
+      <!-- 2nd Last Rx section -->
+      <div class="second-rx-section" id="secondRxSection">
+        <div class="second-rx-head">2nd Last prescription</div>
+
+        <div class="row" style="margin-bottom:0;">
+          <div><p class="field-label">Last quantity</p></div>
+          <div><p class="field-label">Dose</p></div>
+        </div>
+        <div class="row" style="margin-bottom:16px;">
+          <div>
+            <input type="number" id="inputLastQty2" class="manual-input" placeholder="Type qty..." step="any">
+            <div class="roller-wrap"><div class="roller-track" id="trackLastQty2"></div><div class="roller-fade"></div><div class="roller-line-top"></div><div class="roller-line-bottom"></div></div>
+          </div>
+          <div>
+            <input type="number" id="inputLastDose2" class="manual-input" placeholder="Type dose..." step="any">
+            <div class="roller-wrap"><div class="roller-track" id="trackLastDose2"></div><div class="roller-fade"></div><div class="roller-line-top"></div><div class="roller-line-bottom"></div></div>
+          </div>
+        </div>
+
+        <p class="field-label">Frequency</p>
+        <div class="btn-group" data-group="lastFreq2">
+          <button data-value="OD"  data-mult="1" class="active">OD</button>
+          <button data-value="BID" data-mult="2">BID</button>
+          <button data-value="TID" data-mult="3">TID</button>
+          <button data-value="Q6h" data-mult="4">Q6h</button>
+          <button data-value="Q4h" data-mult="6">Q4h</button>
+          <button data-value="Q2h" data-mult="12">Q2h</button>
+        </div>
+
+        <div class="toggle-row">
+          <label class="toggle" id="lastPrnWrap2"><input type="checkbox" id="lastPRN2"><span>PRN</span></label>
+        </div>
+
+        <p class="field-label">Date</p>
+        <div class="row" style="margin-bottom:16px;">
+          <div><input type="date" id="lastDate2"></div>
+          <div></div>
+        </div>
+
+        <div class="summary">
+          <div class="line1" id="lastLine1_2">—</div>
+          <div class="line2" id="lastLine2_2">—</div>
+          <hr>
+          <div class="line4" id="lastSupplyLine2">Supply is 0</div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -370,229 +296,281 @@
   const ITEM_H = 48;
   const rollerState = {};
 
-  // Original arrays from your file
   const DOSE_VALUES = [0.25];
-for(let v = 0.5; v <= 10; v = Math.round((v + 0.5) * 10) / 10) DOSE_VALUES.push(v);
-for(let v = 11; v <= 5000; v++) DOSE_VALUES.push(v);
+  for(let v = 0.5; v <= 10; v = Math.round((v+0.5)*10)/10) DOSE_VALUES.push(v);
+  for(let v = 11; v <= 5000; v++) DOSE_VALUES.push(v);
 
-  const QTY_VALUES = Array.from({length: 5001}, (_, i) => i);
-  const DAYS_VALUES = Array.from({length: 90}, (_, i) => i + 1);
+  const QTY_VALUES  = Array.from({length:5001},(_,i)=>i);
+  const DAYS_VALUES = Array.from({length:90},  (_,i)=>i+1);
+
+  const DEFAULTS = {
+    trackNewDose:  1,
+    trackNewDays:  90,
+    trackLastDose: 1,
+    trackLastQty:  0,
+    trackLastDose2:1,
+    trackLastQty2: 0,
+  };
 
   function buildRoller(trackId, values, defaultValue, inputId) {
     const track = document.getElementById(trackId);
+    if(!track) return;
     const input = inputId ? document.getElementById(inputId) : null;
 
-    const spacerTop = document.createElement('div');
-    spacerTop.className = 'roller-spacer';
-    track.appendChild(spacerTop);
-
+    const st = document.createElement('div'); st.className='roller-spacer'; track.appendChild(st);
     values.forEach(v => {
       const el = document.createElement('div');
-      el.className = 'roller-item';
-      el.textContent = formatLabel(v);
-      el.dataset.value = v;
+      el.className='roller-item'; el.textContent=formatLabel(v); el.dataset.value=v;
       track.appendChild(el);
     });
+    const sb = document.createElement('div'); sb.className='roller-spacer'; track.appendChild(sb);
 
-    const spacerBot = document.createElement('div');
-    spacerBot.className = 'roller-spacer';
-    track.appendChild(spacerBot);
-
-    const defaultIdx = values.indexOf(defaultValue);
-    const idx = defaultIdx >= 0 ? defaultIdx : 0;
+    const defIdx = values.indexOf(defaultValue);
+    const idx = defIdx >= 0 ? defIdx : 0;
     rollerState[trackId] = values[idx];
-    if (input) input.value = values[idx];
+    if(input) input.value = values[idx];
 
-    setTimeout(() => {
-      track.scrollTop = idx * ITEM_H;
-      highlightCenter(track);
-    }, 50);
+    setTimeout(()=>{ track.scrollTop = idx*ITEM_H; highlightCenter(track); }, 50);
 
-    let scrollTimer;
-    track.addEventListener('scroll', () => {
-      clearTimeout(scrollTimer);
-      scrollTimer = setTimeout(() => {
-        const snappedIdx = Math.round(track.scrollTop / ITEM_H);
-        const clampedIdx = Math.max(0, Math.min(values.length - 1, snappedIdx));
-        const newValue = values[clampedIdx];
-        rollerState[trackId] = newValue;
-        if (input && document.activeElement !== input) {
-          input.value = newValue;
-        }
-        highlightCenter(track);
-        runUpdates();
-      }, 80);
+    let t;
+    track.addEventListener('scroll',()=>{
+      clearTimeout(t);
+      t = setTimeout(()=>{
+        const si = Math.round(track.scrollTop/ITEM_H);
+        const ci = Math.max(0,Math.min(values.length-1,si));
+        rollerState[trackId] = values[ci];
+        if(input && document.activeElement!==input) input.value = values[ci];
+        highlightCenter(track); runUpdates();
+      },80);
     });
 
-    if (input) {
-      input.addEventListener('input', () => {
+    if(input){
+      input.addEventListener('input',()=>{
         const val = parseFloat(input.value);
-        if (!isNaN(val)) {
+        if(!isNaN(val)){
           rollerState[trackId] = val;
-          // Find closest value in original array to scroll to
-          let closestIdx = 0;
-          let minDiff = Math.abs(values[0] - val);
-          for (let i = 1; i < values.length; i++) {
-            let diff = Math.abs(values[i] - val);
-            if (diff < minDiff) {
-              minDiff = diff;
-              closestIdx = i;
-            }
-          }
-          track.scrollTo({ top: closestIdx * ITEM_H, behavior: 'smooth' });
+          let ci=0, md=Math.abs(values[0]-val);
+          for(let i=1;i<values.length;i++){ const d=Math.abs(values[i]-val); if(d<md){md=d;ci=i;} }
+          track.scrollTo({top:ci*ITEM_H,behavior:'smooth'});
           runUpdates();
         }
       });
     }
   }
 
-  function highlightCenter(track) {
-    const idx = Math.round(track.scrollTop / ITEM_H);
-    track.querySelectorAll('.roller-item').forEach((el, i) => {
-      el.classList.toggle('selected', i === idx);
-    });
+  function highlightCenter(track){
+    const idx = Math.round(track.scrollTop/ITEM_H);
+    track.querySelectorAll('.roller-item').forEach((el,i)=>el.classList.toggle('selected',i===idx));
   }
 
-  function getRollerValue(trackId) {
-    return rollerState[trackId] ?? 0;
+  function scrollRollerTo(trackId, values){
+    const track = document.getElementById(trackId);
+    if(!track) return;
+    const idx = values.indexOf(rollerState[trackId]);
+    if(idx>=0){ track.scrollTop=idx*ITEM_H; highlightCenter(track); }
   }
 
-  function formatLabel(n) {
-  if (Math.abs(n - 0.25) < 0.001) return '¼';
+  function getRollerValue(trackId){ return rollerState[trackId]??0; }
 
-  const whole = Math.floor(n);
-  const frac  = n - whole;
+  function formatLabel(n){
+    if(Math.abs(n-0.25)<0.001) return '¼';
+    const whole=Math.floor(n), frac=n-whole;
+    if(Math.abs(frac-0.5)<0.001) return whole===0?'½':`${whole}½`;
+    return n;
+  }
 
-  if(Math.abs(frac - 0.5) < 0.001)
-    return whole === 0 ? '½' : `${whole}½`;
-
-  return n;
-}
-
-  function formatNum(n) {
-    const r = Math.round(n * 10) / 10;
-    return Number.isInteger(r) ? r.toString() : r.toFixed(1);
+  function formatNum(n){
+    const r=Math.round(n*10)/10;
+    return Number.isInteger(r)?r.toString():r.toFixed(1);
   }
 
   // ── BUTTON GROUPS ──
-  document.querySelectorAll('.btn-group').forEach(group => {
-    group.addEventListener('click', e => {
-      const btn = e.target.closest('button');
-      if(!btn) return;
-      [...group.children].forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      runUpdates();
+  document.querySelectorAll('.btn-group').forEach(group=>{
+    group.addEventListener('click',e=>{
+      const btn=e.target.closest('button'); if(!btn) return;
+      [...group.children].forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active'); runUpdates();
     });
   });
 
   // ── TOGGLES ──
-  document.querySelectorAll('.toggle').forEach(t => {
-    const input = t.querySelector('input');
-    t.addEventListener('click', () => {
-      input.checked = !input.checked;
-      t.classList.toggle('on', input.checked);
-      runUpdates();
-    });
+  document.querySelectorAll('.toggle').forEach(t=>{
+    const input=t.querySelector('input');
+    t.addEventListener('click',()=>{ input.checked=!input.checked; t.classList.toggle('on',input.checked); runUpdates(); });
   });
 
-  function getActive(groupSelector, attr) {
-    const el = document.querySelector(`.btn-group[data-group="${groupSelector}"] button.active`);
-    if(!el) return null;
-    return attr ? el.dataset[attr] : el.dataset.value;
+  function getActive(group, attr){
+    const el=document.querySelector(`.btn-group[data-group="${group}"] button.active`);
+    return el?(attr?el.dataset[attr]:el.dataset.value):null;
   }
 
-  function todaySA() {
-    return new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Riyadh', year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date());
+  function todaySA(){
+    return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Riyadh',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
   }
-
-  function fmtDate(input) {
-    if(!input.value) return '\u2014';
-    return new Date(input.value + 'T00:00:00').toLocaleDateString('en-GB', {day:'2-digit', month:'short'});
+  function fmtDate(input){
+    if(!input.value) return '—';
+    return new Date(input.value+'T00:00:00').toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
   }
-
-  function daysSince(input) {
+  function daysSince(input){
     if(!input.value) return 0;
-    const start = new Date(input.value + 'T00:00:00');
-    const today = new Date(todaySA() + 'T00:00:00');
-    return Math.max(0, Math.floor((today - start) / 86400000));
+    const start=new Date(input.value+'T00:00:00');
+    const today=new Date(todaySA()+'T00:00:00');
+    return Math.max(0,Math.floor((today-start)/86400000));
   }
 
-  let currentSupply = 0;
+  let currentSupply=0;
 
-  function updateLast() {
-    const mult = parseFloat(getActive('lastFreq', 'mult')) || 0;
-    const dose = getRollerValue('trackLastDose');
-    const qty  = getRollerValue('trackLastQty');
-    const prn  = document.getElementById('lastPRN').checked;
-    const dateInput = document.getElementById('lastDate');
-    const days = daysSince(dateInput);
-
-    let daily = dose * mult;
-    if(prn) daily *= (2/3);
-
-    const supply = Math.max(0, qty - days * daily);
-    currentSupply = supply;
-
-    const prnTxt = prn ? ' PRN' : '';
-    document.getElementById('lastLine1').textContent = `Total of ${formatNum(qty)} Unit`;
-    document.getElementById('lastLine2').textContent =
-      `${formatLabel(dose)} Unit ${formatNum(mult)} daily${prnTxt} from ${fmtDate(dateInput)} (${days} days)`;
-    document.getElementById('lastSupplyLine').textContent = `Supply is ${formatNum(supply)}`;
-    document.getElementById('supplyValueTop').textContent = formatNum(supply);
+  function calcSupply(qtyId, doseId, freqGroup, prnId, dateEl){
+    const mult=parseFloat(getActive(freqGroup,'mult'))||0;
+    const dose=getRollerValue(doseId);
+    const qty =getRollerValue(qtyId);
+    const prn =document.getElementById(prnId).checked;
+    const days=daysSince(dateEl);
+    let daily=dose*mult;
+    if(prn) daily*=(2/3);
+    return {supply:Math.max(0,qty-days*daily), dose, mult, qty, prn, days};
   }
 
-  function updateNew() {
-    const mult = parseFloat(getActive('newFreq', 'mult')) || 0;
-    const dose = getRollerValue('trackNewDose');
-    const days = getRollerValue('trackNewDays');
-    const prn  = document.getElementById('newPRN').checked;
+  function updateLast(){
+    const d1=document.getElementById('lastDate');
+    const r1=calcSupply('trackLastQty','trackLastDose','lastFreq','lastPRN',d1);
+    const prnTxt1=r1.prn?' PRN':'';
+    document.getElementById('lastLine1').textContent=`Total of ${formatNum(r1.qty)} Unit`;
+    document.getElementById('lastLine2').textContent=`${formatLabel(r1.dose)} Unit ${formatNum(r1.mult)} daily${prnTxt1} from ${fmtDate(d1)} (${r1.days} days)`;
+    document.getElementById('lastSupplyLine').textContent=`Supply is ${formatNum(r1.supply)}`;
 
-    let daily = dose * mult;
-    if(prn) daily *= (2/3);
+    let totalSupply=r1.supply;
 
-    const total  = daily * days;
-    const needed = Math.max(0, total - currentSupply);
+    const use2nd=document.getElementById('enable2ndRx').checked;
+    if(use2nd){
+      const d2=document.getElementById('lastDate2');
+      const r2=calcSupply('trackLastQty2','trackLastDose2','lastFreq2','lastPRN2',d2);
+      const prnTxt2=r2.prn?' PRN':'';
+      document.getElementById('lastLine1_2').textContent=`Total of ${formatNum(r2.qty)} Unit`;
+      document.getElementById('lastLine2_2').textContent=`${formatLabel(r2.dose)} Unit ${formatNum(r2.mult)} daily${prnTxt2} from ${fmtDate(d2)} (${r2.days} days)`;
+      document.getElementById('lastSupplyLine2').textContent=`Supply is ${formatNum(r2.supply)}`;
+      totalSupply+=r2.supply;
+    }
 
-    const prnTxt = prn ? ' PRN' : '';
-    document.getElementById('newLine1').textContent = `${formatLabel(dose)} Unit ${formatNum(mult)} daily${prnTxt} For ${days} Days`;
-    document.getElementById('newLine2').textContent = `The Total is ${formatNum(total)}`;
-    document.getElementById('newSupplyLine').textContent = `Supply is ${formatNum(currentSupply)}`;
-    document.getElementById('newNeededLine').textContent = `Quantity needed ${formatNum(needed)}`;
+    currentSupply=totalSupply;
+    document.getElementById('supplyValueTop').textContent=formatNum(totalSupply);
   }
 
-  function runUpdates() { updateLast(); updateNew(); }
+  function updateNew(){
+    const mult=parseFloat(getActive('newFreq','mult'))||0;
+    const dose=getRollerValue('trackNewDose');
+    const days=getRollerValue('trackNewDays');
+    const prn=document.getElementById('newPRN').checked;
+    let daily=dose*mult;
+    if(prn) daily*=(2/3);
+    const total=daily*days;
+    const needed=Math.max(0,total-currentSupply);
+    const prnTxt=prn?' PRN':'';
+    document.getElementById('newLine1').textContent=`${formatLabel(dose)} Unit ${formatNum(mult)} daily${prnTxt} For ${days} Days`;
+    document.getElementById('newLine2').textContent=`The Total is ${formatNum(total)}`;
+    document.getElementById('newSupplyLine').textContent=`Supply is ${formatNum(currentSupply)}`;
+    const needEl=document.getElementById('newNeededLine');
+    needEl.textContent=`Quantity needed ${formatNum(needed)}`;
+    needEl.classList.toggle('warn', currentSupply>=total && total>0);
+  }
+
+  function runUpdates(){ updateLast(); updateNew(); }
+
+  // ── 2nd Rx toggle ──
+  document.getElementById('enable2ndRx').addEventListener('change',function(){
+    document.getElementById('secondRxSection').classList.toggle('open',this.checked);
+    if(this.checked){
+      setTimeout(()=>{
+        scrollRollerTo('trackLastDose2',DOSE_VALUES);
+        scrollRollerTo('trackLastQty2',QTY_VALUES);
+      },50);
+    }
+    runUpdates();
+  });
+
+  // ── RESET ──
+  function resetAll(){
+    // rollers
+    [['trackNewDose',DOSE_VALUES,'inputNewDose'],['trackNewDays',DAYS_VALUES,'inputNewDays'],
+     ['trackLastDose',DOSE_VALUES,'inputLastDose'],['trackLastQty',QTY_VALUES,'inputLastQty'],
+     ['trackLastDose2',DOSE_VALUES,'inputLastDose2'],['trackLastQty2',QTY_VALUES,'inputLastQty2']
+    ].forEach(([tid,vals,iid])=>{
+      const def=DEFAULTS[tid]??0;
+      const idx=vals.indexOf(def); const ci=idx>=0?idx:0;
+      rollerState[tid]=vals[ci];
+      const track=document.getElementById(tid); if(!track) return;
+      track.scrollTop=ci*ITEM_H; highlightCenter(track);
+      const inp=document.getElementById(iid); if(inp) inp.value=vals[ci];
+    });
+
+    // freq buttons
+    ['newFreq','lastFreq','lastFreq2'].forEach(g=>{
+      document.querySelectorAll(`.btn-group[data-group="${g}"] button`).forEach(b=>{
+        b.classList.toggle('active', b.dataset.value==='OD');
+      });
+    });
+
+    // toggles
+    ['newPRN','lastPRN','lastPRN2'].forEach(id=>{
+      const cb=document.getElementById(id); if(!cb) return;
+      cb.checked=false;
+      const label=cb.closest('.toggle'); if(label) label.classList.remove('on');
+    });
+
+    // dates
+    const sa=todaySA();
+    document.getElementById('lastDate').value=sa;
+    document.getElementById('lastDate2').value=sa;
+
+    // 2nd rx
+    document.getElementById('enable2ndRx').checked=false;
+    document.getElementById('secondRxSection').classList.remove('open');
+
+    runUpdates();
+
+    const toast=document.getElementById('toast');
+    toast.textContent='Reset done';
+    toast.classList.add('show');
+    setTimeout(()=>toast.classList.remove('show'),1800);
+  }
+
+  document.getElementById('resetBtn').addEventListener('click', resetAll);
 
   // ── INIT ──
-  buildRoller('trackNewDose',  DOSE_VALUES, 1, 'inputNewDose');
-  buildRoller('trackNewDays', DAYS_VALUES, 90, 'inputNewDays');
-  buildRoller('trackLastDose', DOSE_VALUES, 1, 'inputLastDose');
-  buildRoller('trackLastQty',  QTY_VALUES,  0, 'inputLastQty');
+  buildRoller('trackNewDose',  DOSE_VALUES, 1,  'inputNewDose');
+  buildRoller('trackNewDays',  DAYS_VALUES, 90, 'inputNewDays');
+  buildRoller('trackLastDose', DOSE_VALUES, 1,  'inputLastDose');
+  buildRoller('trackLastQty',  QTY_VALUES,  0,  'inputLastQty');
+  buildRoller('trackLastDose2',DOSE_VALUES, 1,  'inputLastDose2');
+  buildRoller('trackLastQty2', QTY_VALUES,  0,  'inputLastQty2');
 
-  document.getElementById('lastDate').value = todaySA();
-  document.getElementById('newDate').textContent = fmtDate({value: todaySA()});
-  document.getElementById('lastDate').addEventListener('change', runUpdates);
+  const sa=todaySA();
+  document.getElementById('lastDate').value=sa;
+  document.getElementById('lastDate2').value=sa;
+  document.getElementById('newDate').textContent=fmtDate({value:sa});
 
-  document.querySelectorAll('.toggle').forEach(t => {
-    t.classList.toggle('on', t.querySelector('input').checked);
-  });
+  document.getElementById('lastDate').addEventListener('change',runUpdates);
+  document.getElementById('lastDate2').addEventListener('change',runUpdates);
+
+  document.querySelectorAll('.toggle').forEach(t=>t.classList.toggle('on',t.querySelector('input').checked));
 
   runUpdates();
 
   // ── MODAL ──
-  const backdrop = document.getElementById('modalBackdrop');
-  document.getElementById('openLastBtn').addEventListener('click', () => {
+  const backdrop=document.getElementById('modalBackdrop');
+  document.getElementById('openLastBtn').addEventListener('click',()=>{
     backdrop.classList.add('open');
-    setTimeout(() => {
-      [['trackLastDose', DOSE_VALUES], ['trackLastQty', QTY_VALUES]].forEach(([trackId, values]) => {
-        const track = document.getElementById(trackId);
-        const idx = values.indexOf(rollerState[trackId]);
-        if(idx >= 0) { track.scrollTop = idx * ITEM_H; highlightCenter(track); }
-      });
-    }, 50);
+    setTimeout(()=>{
+      scrollRollerTo('trackLastDose',DOSE_VALUES);
+      scrollRollerTo('trackLastQty',QTY_VALUES);
+      if(document.getElementById('enable2ndRx').checked){
+        scrollRollerTo('trackLastDose2',DOSE_VALUES);
+        scrollRollerTo('trackLastQty2',QTY_VALUES);
+      }
+    },50);
   });
-  document.getElementById('closeModal').addEventListener('click', () => backdrop.classList.remove('open'));
-  backdrop.addEventListener('click', e => { if(e.target === backdrop) backdrop.classList.remove('open'); });
+  document.getElementById('closeModal').addEventListener('click',()=>backdrop.classList.remove('open'));
+  backdrop.addEventListener('click',e=>{ if(e.target===backdrop) backdrop.classList.remove('open'); });
 </script>
-
 </body>
 </html>
